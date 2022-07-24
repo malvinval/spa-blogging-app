@@ -20,6 +20,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "daisyui": "^2.19.1"
+        "daisyui": "^2.19.1",
+        "moment": "^2.29.4"
     }
 }
