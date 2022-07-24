@@ -20,6 +20,7 @@ class BlogFactory extends Factory
             "title" => $this->faker->sentence(3),
             "slug" => $this->faker->slug(),
             "body" => $this->faker->paragraph(),
+            "excerpt" => "Lorem ipsum...",
             "author_id" => mt_rand(1, 10),
             "category_id" => mt_rand(1, 3),
         ];

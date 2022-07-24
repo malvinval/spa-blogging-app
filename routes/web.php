@@ -25,6 +25,7 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified'])->name('home');
 
 Route::get('/blogs', [SiteController::class, "blogs"])->middleware(['auth', 'verified'])->name('blogs');
+Route::get('/blog/{blogs:slug}', [SiteController::class, "blog"])->middleware(['auth', 'verified'])->name('blog');
 
 Route::get('/categories', function () {
     return Inertia::render('Categories');
