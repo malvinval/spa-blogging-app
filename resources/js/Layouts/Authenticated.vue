@@ -20,14 +20,14 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
-                                <BreezeNavLink :href="route('home')" :active="route().current('home')">
-                                    Home
+                                <BreezeNavLink :href="route('home')" :active="route().current('home')" class="items-center">
+                                    <i class="bi bi-house-door"></i><p class="ml-2">Home</p>
                                 </BreezeNavLink>
                                 <BreezeNavLink :href="route('blogs')" :active="route().current('blogs') || route().current('blog')">
-                                    Blogs
+                                    <i class="bi bi-book-half"></i><p class="ml-2">Blogs</p>
                                 </BreezeNavLink>
                                 <BreezeNavLink :href="route('categories')" :active="route().current('categories')">
-                                    Categories
+                                    <i class="bi bi-list-ul"></i><p class="ml-2">Category</p>
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ const showingNavigationDropdown = ref(false);
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('blogs')">
                             All Blogs
                         </BreezeResponsiveNavLink>
                     </div>

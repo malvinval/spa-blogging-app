@@ -9,8 +9,7 @@ use Inertia\Inertia;
 class SiteController extends Controller
 {
     public function blogs() {
-        $blogs = Blog::with(["author", "category"])->latest()->get();
-
+        $blogs = Blog::with(["author", "category"])->filter(request(["search", "category"]))->latest()->get();
         return Inertia::render("Blogs", compact("blogs"));
     }
 

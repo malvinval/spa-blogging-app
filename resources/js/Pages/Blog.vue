@@ -31,7 +31,7 @@
                 <!--Title-->
                 <div class="font-sans">
                     <p class="text-base md:text-sm text-teal-500 font-bold"><Link :href="route('blogs')" class="text-base md:text-sm text-teal-500 font-bold no-underline hover:underline">BACK TO BLOGS</Link></p>
-                    <h1 class="font-bold break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl">{{ blog.title }}</h1>
+                    <h1 class="font-bold break-normal text-teal-900 pt-6 pb-2 text-3xl md:text-4xl">{{ blog.title }}</h1>
                     <p class="text-sm md:text-base font-normal text-gray-600">Published {{ moment(blog.created_at).format("Mo DD, YYYY") }}</p>
                 </div>
 
@@ -56,7 +56,7 @@
             <div class="container px-4">
                 <div class="bg-gradient-to-b from-teal-100 to-gray-100 rounded-lg shadow-xl p-4 text-center">
                     <h2 class="font-bold break-normal text-xl md:text-3xl text-teal-800">Show your <span class="text-rose-600">&hearts;</span> for this author !</h2>
-                    <h3 class="font-bold break-normal text-gray-400 text-sm md:text-base">Please ensure that you do this without coercion.</h3>
+                    <h3 class="font-bold break-normal text-gray-400 text-sm md:text-base">Please ensure that you do this without any coercion.</h3>
                     <div class="w-full text-center pt-4">                       
                         <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
                             <input type="email" placeholder="youremail@example.com" class="flex-1 mt-4 appearance-none border border-gray-400 rounded shadow-md p-3 text-gray-600 mr-2 focus:outline-none">
@@ -86,10 +86,10 @@
             <!--Next & Prev Links-->
             <div class="font-sans flex justify-between content-center px-4 pb-12">
                 <div class="text-left">
-                    <Link v-if="previous != NULL" :href="'/blog/'+previous.slug" class="btn btn-secondary btn-outline">&lt; Previous Blog</Link>
+                    <Link v-if="previous != NULL" :href="'/blog/'+previous.slug" class="font-bold text-secondary">&lt; Previous Blog</Link>
                 </div>
                 <div class="text-right">
-                    <Link v-if="next != NULL" :href="'/blog/'+next.slug" class="btn btn-accent btn-outline">Next Blog &gt;</Link>
+                    <Link v-if="next != NULL" :href="'/blog/'+next.slug" class="font-bold text-accent">Next Blog &gt;</Link>
                 </div>
             </div>
 

@@ -2,6 +2,7 @@
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import moment from "moment";
+    import 'bootstrap-icons/font/bootstrap-icons.css';
 
     defineProps({
         blogs: Object
@@ -12,7 +13,9 @@
     export default {
         data() {
             return {
-                moment: moment
+                moment: moment,
+                searchValue: '',
+                blogsDataSize: this.blogs.length
             }
         },
     }
@@ -22,8 +25,21 @@
     <Head title="Blogs" />
 
     <BreezeAuthenticatedLayout>
+        <div v-if="blogsDataSize > 0" class="mt-10 mx-auto max-w-7xl">
+            <div class="filter-container mx-5 flex justify-end">
+                <!-- insert element here -->
+                <div class="form-control">
+                    <div :class="searchValue == '' ? '' : 'input-group'">
+                        <input v-model="searchValue" type="text" placeholder="Search a title..." class="text-gray-600 input input-bordered border-accent bg-transparent" autocomplete="off"/>
+                        <Link v-if="searchValue !== ''" :href="'/blogs?search='+searchValue" class="btn btn-square border-none hover:bg-accent-focus bg-accent">
+                            <i class="bi bi-search text-white"></i>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="mx-auto max-w-7xl flex flex-wrap justify-evenly">
-            
             <div v-for="(blog, index) in blogs" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-light text-gray-600">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
@@ -44,6 +60,8 @@
                     </div>
                 </div>
             </div>
+
+            <p v-if="blogsDataSize == 0" class="text-teal-500 my-10 font-bold">No blogs found.</p>
         </div> 
     </BreezeAuthenticatedLayout>
 </template>
