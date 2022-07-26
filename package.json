@@ -22,6 +22,7 @@
     "dependencies": {
         "bootstrap-icons": "^1.9.1",
         "daisyui": "^2.19.1",
-        "moment": "^2.29.4"
+        "moment": "^2.29.4",
+        "vue-laravel-csrf": "^1.0.0"
     }
 }
