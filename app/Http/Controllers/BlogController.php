@@ -30,10 +30,4 @@ class BlogController extends Controller
             'liked' => $blog->liked
         ]);
     }
-
-    // public function unlikeBlog($id)
-    // {
-    //     $blog = Blog::find($id);
-    //     $blog->unlike();
-    // }
 }

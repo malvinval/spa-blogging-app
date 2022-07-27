@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text("body");
             $table->foreignId("author_id");
             $table->foreignId("category_id");
+            $table->bigInteger('reads')->unsigned()->default(0);
             $table->timestamps();
         });
     }

@@ -18,7 +18,6 @@
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 likes: this.getLike(),
                 liked: false,
-                views: 0
             }
         },
 
@@ -56,7 +55,7 @@
                         <div class="flex">
                             <div class="flex views-btn-container mr-5">
                                 <i class="bi bi-eye-fill mr-2"></i>
-                                <p class="text-slate-800">{{ views }}</p>
+                                <p class="text-slate-800">{{ blog.reads }}</p>
                             </div>
                             <div class="flex like-btn-container">
                                 <i @click="like()" class="cursor-pointer bi-suit-heart-fill bi mr-2" :class="liked ? 'text-secondary' : '' "></i>

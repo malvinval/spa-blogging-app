@@ -5,6 +5,7 @@ namespace App\Models;
 use Conner\Likeable\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class Blog extends Model
 {
@@ -37,10 +38,10 @@ class Blog extends Model
             });
         });
 
-        // $query->when($filters['user'] ?? false, function($query, $user) { 
-        //     return $query->whereHas("user", function($query) use ($user) {
-        //         $query->where('username',$user);
-        //     });
-        // });
+        $query->when($filters['user'] ?? false, function($query, $user) { 
+            return $query->whereHas("user", function($query) use ($user) {
+                $query->where('username',$user);
+            });
+        });
     }
 }

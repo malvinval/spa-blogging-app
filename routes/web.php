@@ -29,7 +29,6 @@ Route::get('/blogs', [SiteController::class, "blogs"])->middleware(['auth', 'ver
 Route::get('/blog/{blogs:slug}', [SiteController::class, "blog"])->middleware(['auth', 'verified'])->name('blog');
 
 Route::post('/like-blog/{id}',[BlogController::class,'likeBlog'])->name('like.blog');
-Route::post('/unlike-blog/{id}',[BlogController::class,'unlikeblog'])->name('unlike.blog');
 Route::post('/get-like/{id}',[BlogController::class,'getLikeBlog'])->name('getlike.blog');
 
 Route::get('/categories', function () {
