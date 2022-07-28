@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
+
 
 class SiteController extends Controller
 {
@@ -52,6 +55,4 @@ class SiteController extends Controller
             "next" => $next,
         ]);
     }
-
-    
 }

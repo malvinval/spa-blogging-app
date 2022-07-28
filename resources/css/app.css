@@ -8,3 +8,15 @@
     background: linear-gradient(to right, #141e30, #243b55); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     opacity: 0.1;
 }
+
+.comment-rule {
+    color: slate;
+    opacity: 0.9;
+    
+    margin-top: 0.50rem/* 4px */;
+    margin-bottom: 0.50rem/* 4px */;
+}
+
+.single-comment-container {
+    margin-top: 1.25rem/* 20px */;
+}

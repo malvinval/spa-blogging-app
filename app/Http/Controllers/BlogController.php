@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use App\Models\Comment;
 
 class BlogController extends Controller
 {
@@ -30,4 +31,26 @@ class BlogController extends Controller
             'liked' => $blog->liked
         ]);
     }
+
+    public function comment(Request $request) {
+        Comment::create([
+            "blog_id" => $request->params["blogId"],
+            "user_id" => auth()->user()->id,
+            "body" => $request->params["body"],
+            "name" => auth()->user()->name
+        ]);
+
+        return response()->json([
+            'success' => "Your comment has been published !",
+        ]);
+    }
+
+    public function getComments($id) {
+        $comments = Comment::where("blog_id", $id)->latest()->get();
+
+        return response()->json([
+            'comments' => $comments,
+        ]);
+    }
+
 }
