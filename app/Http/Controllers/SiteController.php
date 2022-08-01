@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use App\Models\Comment;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
@@ -20,7 +18,7 @@ class SiteController extends Controller
     private function setBlogCookie($blog) {
         $cookie_name = Auth::user()->id . $blog->slug;
         $cookie_value = Auth::user()->id . $blog->slug;
-        $cookie_duration = 120;
+        $cookie_duration = 5;
         Cookie::queue($cookie_name, $cookie_value, $cookie_duration);
     }
 

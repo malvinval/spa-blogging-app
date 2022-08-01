@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -30,6 +32,29 @@ class BlogController extends Controller
             'likes' => $blog->likeCount,
             'liked' => $blog->liked
         ]);
+    }
+
+    public function isRulesConfirmed($id) {
+        $blog = Blog::find($id);
+        $cookie = Cookie::get(Auth::user()->id . "-rules-confirmed");
+        $isRulesConfirmed = false;
+
+        if($cookie) {
+            $isRulesConfirmed = true;
+        }
+
+        return response()->json([
+            "isRulesConfirmed" => $isRulesConfirmed
+        ]);
+    }
+
+    public function setRulesConfirmed($id) {
+        $blog = Blog::find($id);
+
+        $cookie_name = Auth::user()->id . "-rules-confirmed";
+        $cookie_value = Auth::user()->id . "-rules-confirmed";
+        $cookie_duration = 60;
+        Cookie::queue($cookie_name, $cookie_value, $cookie_duration);
     }
 
     public function comment(Request $request) {

@@ -2,7 +2,6 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import moment from "moment";
-
 defineProps({
     blogObj: Object,
     previous: Object,
@@ -20,7 +19,7 @@ export default {
             likes: this.getLike(),
             liked: false,
             comments: this.getComments(),
-            rulesConfirmed: false,
+            rulesConfirmed: this.isRulesConfirmed(),
             commentBody: '',
         }
     },
@@ -30,13 +29,43 @@ export default {
             axios.post('/like-blog/' + this.blogId)
                 .then(this.getLike());
         },
-
         getLike() {
             axios.post('/get-like/' + this.blogObj[0].id)
                 .then((response) => {
                     this.likes = response.data.likes;
                     this.liked = response.data.liked;
                 })
+        },
+
+        isRulesConfirmed() {
+            axios.post('/rules-confirmed/' + this.blogObj[0].id)
+                .then((response) => {
+                    this.rulesConfirmed = response.data.isRulesConfirmed;
+                });
+        },
+
+        setRulesConfirmed() {
+            swal({
+                text: "Can you promise us not to violate the commenting rules that we have provided ?",
+                icon: "warning",
+                buttons: "Yes, I promise.",
+            }).then((value) => {
+                axios.post('/set-rules-confirmed/' + this.blogId)
+                .then(() => {   
+                        this.isRulesConfirmed();
+                        Vue.forceUpdate();
+                    }
+                );
+
+                value ? swal({
+                    title: "Thank you !",
+                    text: "Now you can use the comment feature.",
+                    icon: "success",
+                    timer: 3000,
+                    buttons: false
+                }) : '';
+                
+            });
         },
 
         comment() {
@@ -66,31 +95,12 @@ export default {
                 });
             }
         },
-
         getComments() {
             axios.post('/get-comments/' + this.blogObj[0].id)
                 .then((response) => {
                     this.comments = response.data.comments;
                 })
         },
-
-        confirmRules() {
-            swal({
-                text: "Can you promise us not to violate the commenting rules that we have provided ?",
-                icon: "warning",
-                buttons: "Yes, I promise.",
-            }).then((value) => {
-                this.rulesConfirmed = value;
-                value ? swal({
-                    title: "Thank you !",
-                    text: "Now you can use the comment feature.",
-                    icon: "success",
-                    timer: 3000,
-                    buttons: false
-                }) : '';
-                
-            });
-        }
     },
 }
 </script>
@@ -171,7 +181,7 @@ export default {
             <!-- /Tags -->
 
             <!-- Comment -->
-            <div class="collapse">
+            <div v-if="rulesConfirmed == false" class="collapse">
                 <input type="checkbox" />
                 <div class="collapse-title text-xl font-medium">
                     <p>
@@ -200,14 +210,13 @@ export default {
                             </ul>
 
                         </span>
-                        <button v-if="!rulesConfirmed" v-on:click="confirmRules()" class="btn btn-accent">I understand</button>
+                        <button v-on:click="setRulesConfirmed()" class="btn btn-accent">I understand</button>
                     </div>
                 </div>
             </div>
 
-            <div class="comments-container mx-5">
-
-                <p v-if="comments != undefined" class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
+            <div class="comments-container mx-5" v-if="comments != undefined">
+                <p class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
                 <div v-for="comment in comments" class="single-comment-container">
                     <div class="text-base font-semibold text-gray-600">
                         <div class="flex items-center">

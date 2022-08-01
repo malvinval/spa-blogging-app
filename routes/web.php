@@ -28,10 +28,14 @@ Route::get('/home', function () {
 Route::get('/blogs', [SiteController::class, "blogs"])->middleware(['auth', 'verified'])->name('blogs');
 Route::get('/blog/{blogs:slug}', [SiteController::class, "blog"])->middleware(['auth', 'verified'])->name('blog');
 
+// Blog API
 Route::post('/like-blog/{id}',[BlogController::class,'likeBlog'])->name('like.blog');
 Route::post('/get-like/{id}',[BlogController::class,'getLikeBlog'])->name('getlike.blog');
 Route::post('/comment/{id}', [BlogController::class,'comment'])->name('comment.blog');
 Route::post('/get-comments/{id}', [BlogController::class,'getComments'])->name('getcomments.blog');
+Route::post('/rules-confirmed/{id}', [BlogController::class, 'isRulesConfirmed'])->name("rulesconfirmed.blog");
+Route::post('/set-rules-confirmed/{id}', [BlogController::class, "setRulesConfirmed"])->name("setrulesconfirmed.blog");
+// End Blog API
 
 Route::get('/categories', function () {
     return Inertia::render('Categories');
