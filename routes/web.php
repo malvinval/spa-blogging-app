@@ -35,6 +35,7 @@ Route::post('/comment/{id}', [BlogController::class,'comment'])->name('comment.b
 Route::post('/get-comments/{id}', [BlogController::class,'getComments'])->name('getcomments.blog');
 Route::post('/rules-confirmed/{id}', [BlogController::class, 'isRulesConfirmed'])->name("rulesconfirmed.blog");
 Route::post('/set-rules-confirmed/{id}', [BlogController::class, "setRulesConfirmed"])->name("setrulesconfirmed.blog");
+Route::post('/send-comment-report/{id}', [BlogController::class, "sendCommentReport"])->name("sendcommentreport");
 // End Blog API
 
 Route::get('/categories', function () {

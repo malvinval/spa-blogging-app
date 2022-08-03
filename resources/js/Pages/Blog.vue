@@ -1,12 +1,14 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import moment from "moment";
-defineProps({
-    blogObj: Object,
-    previous: Object,
-    next: Object,
-});
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Head, Link } from '@inertiajs/inertia-vue3';
+    import moment from "moment";
+    
+    defineProps({
+        blogObj: Object,
+        previous: Object,
+        next: Object,
+        commentReportsCategories: Object
+    });
 </script>
 
 <script>
@@ -21,6 +23,10 @@ export default {
             comments: this.getComments(),
             rulesConfirmed: this.isRulesConfirmed(),
             commentBody: '',
+            reportCommentId: '',
+            reportCommentCategoryId: '',
+            reportCommentSuccessTitle: '',
+            reportCommentSuccessText: ''
         }
     },
 
@@ -36,38 +42,36 @@ export default {
                     this.liked = response.data.liked;
                 })
         },
-
         isRulesConfirmed() {
             axios.post('/rules-confirmed/' + this.blogObj[0].id)
                 .then((response) => {
                     this.rulesConfirmed = response.data.isRulesConfirmed;
                 });
         },
-
         setRulesConfirmed() {
             swal({
                 text: "Can you promise us not to violate the commenting rules that we have provided ?",
                 icon: "warning",
                 buttons: "Yes, I promise.",
             }).then((value) => {
-                axios.post('/set-rules-confirmed/' + this.blogId)
-                .then(() => {   
-                        this.isRulesConfirmed();
-                        Vue.forceUpdate();
-                    }
-                );
+                if(value) {
+                    axios.post('/set-rules-confirmed/' + this.blogId)
+                    .then(() => {   
+                            this.isRulesConfirmed();
+                            this.$forceUpdate();
+                        }
+                    );
 
-                value ? swal({
-                    title: "Thank you !",
-                    text: "Now you can use the comment feature.",
-                    icon: "success",
-                    timer: 3000,
-                    buttons: false
-                }) : '';
-                
+                    swal({
+                        title: "Thank you !",
+                        text: "Now you can use the comment feature.",
+                        icon: "success",
+                        timer: 3000,
+                        buttons: false
+                    });
+                }
             });
         },
-
         comment() {
             if(this.rulesConfirmed) {
                 axios.post('/comment/' + this.blogId, {
@@ -101,6 +105,17 @@ export default {
                     this.comments = response.data.comments;
                 })
         },
+        sendCommentReport() {            
+            axios.post('/send-comment-report/' + this.reportCommentId, {
+                params: {
+                    reportCommentCategoryId: this.reportCommentCategoryId,
+                    blogId: this.blogId,
+                }
+            }).then((response) => {
+                this.reportCommentSuccessTitle = response.data.successTitle;
+                this.reportCommentSuccessText = response.data.successText;
+            })
+        }
     },
 }
 </script>
@@ -144,7 +159,7 @@ export default {
                 <!--Post Content-->
 
                 <!--Body-->
-                <p class="py-6">
+                <p class="py-6 text-justify">
                     {{ blog.body }}
                 </p>
             </div>
@@ -215,16 +230,23 @@ export default {
                 </div>
             </div>
 
-            <div class="comments-container mx-5" v-if="comments != undefined">
+            <div class="comments-container max-w-xl mx-5" v-if="comments != undefined">
                 <p class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
-                <div v-for="comment in comments" class="single-comment-container">
-                    <div class="text-base font-semibold text-gray-600">
-                        <div class="flex items-center">
+                <div v-for="comment in comments" class="group single-comment-container">
+                    <!-- <div class="text-base font-semibold text-gray-600"> -->
+                    <div class="text-base font-semibold text-gray-600 flex items-center justify-between">
+                        <div class="flex mx-0">
                             <p>{{ comment.name }}</p>&nbsp;
-                            <span class="text-sm font-normal text-gray-500">- {{ moment(comment.created_at).format("MMMM DD, YYYY") }}</span>
+                            <span class="text-sm font-normal text-gray-500">- {{ moment(comment.created_at).format("MMMM DD, YYYY") }} </span>
                         </div>
+                        <div class="text-red-500 cursor-pointer invisible group-hover:visible">
+                            <label @click="this.reportCommentId = comment.id" for="report-modal" class="cursor-pointer modal-button"><i class="bi bi-exclamation-octagon"></i></label>
+                        </div>
+                        
                     </div>
-                    <div class="text-base text-gray-600">
+                    <!-- </div> -->
+                
+                    <div class="text-base text-gray-500 my-2 text-justify">
                         {{ comment.body }}
                     </div>
                 </div>
@@ -331,6 +353,33 @@ export default {
                 </div>
             </div>
         </footer>
+        <input type="checkbox" id="report-modal" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box relative">
+                <label for="report-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                <h3 class="text-lg font-bold mb-5">Why are you reporting this comment ?</h3>
+                <div v-for="commentReportCategory in commentReportsCategories" class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">{{ commentReportCategory.name }}</span> 
+                        <input type="radio" :value="commentReportCategory.id" v-model="this.reportCommentCategoryId" name="commentReportCategory" class="radio checked:bg-teal-500" />
+                    </label>
+                </div>
+                <div class="modal-action">
+                    <button v-if="this.reportCommentCategoryId" @click="sendCommentReport()" class="btn"><label for="report-feedback-modal" class="btn modal-button">Send report</label></button>
+                </div>
+            </div>
+        </div>
+
+        <input type="checkbox" id="report-feedback-modal" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-lg">{{ this.reportCommentSuccessTitle }}</h3>
+                <p class="py-4">{{ this.reportCommentSuccessText }}</p>
+                <div class="modal-action">
+                <label for="report-feedback-modal" class="btn">Close</label>
+                </div>
+            </div>
+        </div>
     </BreezeAuthenticatedLayout>
 </template>
 

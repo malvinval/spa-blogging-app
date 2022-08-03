@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\CommentReports;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,6 @@ class BlogController extends Controller
     }
 
     public function isRulesConfirmed($id) {
-        $blog = Blog::find($id);
         $cookie = Cookie::get(Auth::user()->id . "-rules-confirmed");
         $isRulesConfirmed = false;
 
@@ -49,11 +49,10 @@ class BlogController extends Controller
     }
 
     public function setRulesConfirmed($id) {
-        $blog = Blog::find($id);
 
         $cookie_name = Auth::user()->id . "-rules-confirmed";
         $cookie_value = Auth::user()->id . "-rules-confirmed";
-        $cookie_duration = 60;
+        $cookie_duration = 1;
         Cookie::queue($cookie_name, $cookie_value, $cookie_duration);
     }
 
@@ -75,6 +74,19 @@ class BlogController extends Controller
 
         return response()->json([
             'comments' => $comments,
+        ]);
+    }
+
+    public function sendCommentReport($id, Request $request) {
+        CommentReports::create([
+            "comment_id" => $id,
+            "reports_category_id" => $request->params["reportCommentCategoryId"],
+            "blog_id" => $request->params["blogId"]
+        ]);
+
+        return response()->json([
+            'successTitle' => 'Thanks for letting us know',
+            'successText' => 'Your feedback is important in helping us keep the ' . env("APP_NAME") . ' community safe.'
         ]);
     }
 

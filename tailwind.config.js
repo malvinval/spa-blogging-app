@@ -14,6 +14,9 @@ module.exports = {
             fontFamily: {
                 quicksand: ['Quicksand', ...defaultTheme.fontFamily.serif],
             },
+            maxWidth: {
+                '1/2': '50%',
+            }
         },
     },
 

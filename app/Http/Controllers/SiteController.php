@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\CommentReportsCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
@@ -36,6 +37,7 @@ class SiteController extends Controller
 
     public function blog($slug) {
         $blogObj = Blog::where("slug", $slug)->with(["author", "category"])->get();
+        $comment_reports_categories = CommentReportsCategory::all();
         
         foreach($blogObj as $blog) {
             // Take previous and next blog
@@ -46,11 +48,11 @@ class SiteController extends Controller
             $this->incrementViews($blog);
         }
 
-
         return Inertia::render("Blog", [
             "blogObj" => $blogObj,
             "previous" => $previous,
             "next" => $next,
+            "commentReportsCategories" => $comment_reports_categories
         ]);
     }
 }
