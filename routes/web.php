@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SiteController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,7 +31,7 @@ Route::get('/blog/{blogs:slug}', [SiteController::class, "blog"])->middleware(['
 Route::post('/like-blog/{id}',[BlogController::class,'likeBlog'])->name('like.blog');
 Route::post('/get-like/{id}',[BlogController::class,'getLikeBlog'])->name('getlike.blog');
 Route::post('/comment/{id}', [BlogController::class,'comment'])->name('comment.blog');
-Route::post('/get-comments/{id}', [BlogController::class,'getComments'])->name('getcomments.blog');
+Route::post('/update-comments/{id}', [BlogController::class,'updateComments'])->name('updatecomments.blog');
 Route::post('/rules-confirmed/{id}', [BlogController::class, 'isRulesConfirmed'])->name("rulesconfirmed.blog");
 Route::post('/set-rules-confirmed/{id}', [BlogController::class, "setRulesConfirmed"])->name("setrulesconfirmed.blog");
 Route::post('/send-comment-report/{id}', [BlogController::class, "sendCommentReport"])->name("sendcommentreport");

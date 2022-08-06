@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
 use App\Models\CommentReportsCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -35,10 +36,16 @@ class SiteController extends Controller
         }
     }
 
+    private function getComments($id) {
+        $comments = Comment::where("blog_id", $id)->latest()->get();
+        return $comments;
+    }
+
     public function blog($slug) {
         $blogObj = Blog::where("slug", $slug)->with(["author", "category"])->get();
         $comment_reports_categories = CommentReportsCategory::all();
-        
+        $comments = '';
+
         foreach($blogObj as $blog) {
             // Take previous and next blog
             $previous = Blog::find($blog->id - 1);
@@ -46,13 +53,17 @@ class SiteController extends Controller
             
             // Count views
             $this->incrementViews($blog);
+
+            // Get comments
+            $comments = $this->getComments($blog->id);
         }
 
         return Inertia::render("Blog", [
             "blogObj" => $blogObj,
             "previous" => $previous,
             "next" => $next,
-            "commentReportsCategories" => $comment_reports_categories
+            "commentReportsCategories" => $comment_reports_categories,
+            "comments" => $comments
         ]);
     }
 }

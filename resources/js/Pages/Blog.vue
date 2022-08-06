@@ -7,7 +7,8 @@
         blogObj: Object,
         previous: Object,
         next: Object,
-        commentReportsCategories: Object
+        commentReportsCategories: Object,
+        comments: Object
     });
 </script>
 
@@ -20,7 +21,7 @@ export default {
             blogId: this.blogObj[0].id,
             likes: this.getLike(),
             liked: false,
-            comments: this.getComments(),
+            commentsData: this.comments,
             rulesConfirmed: this.isRulesConfirmed(),
             commentBody: '',
             reportCommentId: '',
@@ -86,7 +87,8 @@ export default {
                             timer: 3000,
                             buttons: false
                         });
-                        this.getComments();
+                        this.updateComments();
+
                         this.commentBody = '';
                     }
                 )
@@ -99,10 +101,10 @@ export default {
                 });
             }
         },
-        getComments() {
-            axios.post('/get-comments/' + this.blogObj[0].id)
+        updateComments() {
+            axios.post('/update-comments/' + this.blogObj[0].id)
                 .then((response) => {
-                    this.comments = response.data.comments;
+                    this.commentsData = response.data.updatedComments;
                 })
         },
         sendCommentReport() {            
@@ -232,7 +234,7 @@ export default {
 
             <div class="comments-container max-w-xl mx-5" v-if="comments != undefined">
                 <p class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
-                <div v-for="comment in comments" class="group single-comment-container">
+                <div v-for="comment in commentsData" class="group single-comment-container">
                     <!-- <div class="text-base font-semibold text-gray-600"> -->
                     <div class="text-base font-semibold text-gray-600 flex items-center justify-between">
                         <div class="flex mx-0">

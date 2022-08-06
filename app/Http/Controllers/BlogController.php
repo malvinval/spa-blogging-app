@@ -69,11 +69,11 @@ class BlogController extends Controller
         ]);
     }
 
-    public function getComments($id) {
+    public function updateComments($id) {
         $comments = Comment::where("blog_id", $id)->latest()->get();
 
         return response()->json([
-            'comments' => $comments,
+            'updatedComments' => $comments,
         ]);
     }
 
