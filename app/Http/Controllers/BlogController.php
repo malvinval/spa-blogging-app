@@ -22,34 +22,12 @@ class BlogController extends Controller
         }
 
         return response()->json([
-            'likes' => $blog->likeCount,
+            'isLiked' => $blog->liked,
+            'likesData' => $blog->likeCount
         ]);
     }
 
-    public function getLikeBlog($id) {
-        $blog = Blog::find($id);
-        
-        return response()->json([
-            'likes' => $blog->likeCount,
-            'liked' => $blog->liked
-        ]);
-    }
-
-    public function isRulesConfirmed($id) {
-        $cookie = Cookie::get(Auth::user()->id . "-rules-confirmed");
-        $isRulesConfirmed = false;
-
-        if($cookie) {
-            $isRulesConfirmed = true;
-        }
-
-        return response()->json([
-            "isRulesConfirmed" => $isRulesConfirmed
-        ]);
-    }
-
-    public function setRulesConfirmed($id) {
-
+    public function setRulesConfirmed() {
         $cookie_name = Auth::user()->id . "-rules-confirmed";
         $cookie_value = Auth::user()->id . "-rules-confirmed";
         $cookie_duration = 1;

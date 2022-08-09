@@ -8,7 +8,10 @@
         previous: Object,
         next: Object,
         commentReportsCategories: Object,
-        comments: Object
+        comments: Object,
+        isLiked: Boolean,
+        likesData: Number,
+        isRulesConfirmed: Boolean
     });
 </script>
 
@@ -19,10 +22,10 @@ export default {
             moment: moment,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             blogId: this.blogObj[0].id,
-            likes: this.getLike(),
-            liked: false,
+            likes: this.likesData,
+            liked: this.isLiked,
             commentsData: this.comments,
-            rulesConfirmed: this.isRulesConfirmed(),
+            rulesConfirmed: this.isRulesConfirmed,
             commentBody: '',
             reportCommentId: '',
             reportCommentCategoryId: '',
@@ -34,21 +37,17 @@ export default {
     methods: {
         like() {
             axios.post('/like-blog/' + this.blogId)
-                .then(this.getLike());
-        },
-        getLike() {
-            axios.post('/get-like/' + this.blogObj[0].id)
                 .then((response) => {
-                    this.likes = response.data.likes;
-                    this.liked = response.data.liked;
-                })
-        },
-        isRulesConfirmed() {
-            axios.post('/rules-confirmed/' + this.blogObj[0].id)
-                .then((response) => {
-                    this.rulesConfirmed = response.data.isRulesConfirmed;
+                    this.likes = response.data.likesData;
+                    this.liked = response.data.isLiked;
                 });
         },
+        // isRulesConfirmed() {
+        //     axios.post('/rules-confirmed')
+        //         .then((response) => {
+        //             this.rulesConfirmed = response.data.isRulesConfirmed;
+        //         });
+        // },
         setRulesConfirmed() {
             swal({
                 text: "Can you promise us not to violate the commenting rules that we have provided ?",
@@ -56,9 +55,9 @@ export default {
                 buttons: "Yes, I promise.",
             }).then((value) => {
                 if(value) {
-                    axios.post('/set-rules-confirmed/' + this.blogId)
+                    axios.post('/set-rules-confirmed')
                     .then(() => {   
-                            this.isRulesConfirmed();
+                            this.rulesConfirmed = true;
                             this.$forceUpdate();
                         }
                     );
@@ -123,14 +122,10 @@ export default {
 </script>
 
 <template>
-
     <Head title="Blog" />
-
     <BreezeAuthenticatedLayout>
         <div v-for="blog in blogObj" class="container w-full max-w-7xl mx-auto pt-20">
-
             <div class="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal" style="font-family:Georgia,serif;">
-
                 <!--Title-->
                 <div class="font-sans">
                     <p class="text-base md:text-sm text-teal-500 font-bold">
@@ -173,8 +168,6 @@ export default {
                     <Link class="text-base md:text-sm text-teal-500 no-underline hover:underline">{{ blog.category.name
                     }}</Link>
                 </span>
-                <!-- Create Like Button here later ! -->
-
             </div>
 
             <!--Divider-->
@@ -235,19 +228,16 @@ export default {
             <div class="comments-container max-w-xl mx-5" v-if="comments != undefined">
                 <p class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
                 <div v-for="comment in commentsData" class="group single-comment-container">
-                    <!-- <div class="text-base font-semibold text-gray-600"> -->
                     <div class="text-base font-semibold text-gray-600 flex items-center justify-between">
                         <div class="flex mx-0">
                             <p>{{ comment.name }}</p>&nbsp;
                             <span class="text-sm font-normal text-gray-500">- {{ moment(comment.created_at).format("MMMM DD, YYYY") }} </span>
                         </div>
-                        <div class="text-red-500 cursor-pointer invisible group-hover:visible">
+                        <div class="text-red-500 cursor-pointer invisible report-btn-container group-hover:visible">
                             <label @click="this.reportCommentId = comment.id" for="report-modal" class="cursor-pointer modal-button"><i class="bi bi-exclamation-octagon"></i></label>
                         </div>
                         
                     </div>
-                    <!-- </div> -->
-                
                     <div class="text-base text-gray-500 my-2 text-justify">
                         {{ comment.body }}
                     </div>
@@ -263,7 +253,7 @@ export default {
                 </textarea>
 
                 <div class="mt-2">
-                    <button @click="comment()" class="h-12 w-[150px] btn bg-indigo-600 hover:bg-indigo-700 border-none text-sm text-white rounded-lg transition-all cursor-pointer">Submit</button>
+                    <button @click="comment()" class="h-12 w-[150px] btn bg-teal-500 hover:bg-teal-600 border-none text-sm text-white rounded-lg transition-all cursor-pointer">Submit</button>
                 </div>
             </div>
             <!-- /Comment -->

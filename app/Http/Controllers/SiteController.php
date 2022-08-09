@@ -41,10 +41,37 @@ class SiteController extends Controller
         return $comments;
     }
 
+    private function getLikeBlog($id) {
+        $blog = Blog::find($id);
+        $likes = $blog->likeCount;
+
+        return $likes;
+    }
+
+    private function isBlogLiked($id) {
+        $blog = Blog::find($id);
+        $liked = $blog->liked;
+        return $liked;
+    }
+
+    private function isRulesConfirmed() {
+        $cookie = Cookie::get(Auth::user()->id . "-rules-confirmed");
+        $isRulesConfirmed = false;
+
+        if($cookie) {
+            $isRulesConfirmed = true;
+        }
+
+        return $isRulesConfirmed;
+    }
+
     public function blog($slug) {
         $blogObj = Blog::where("slug", $slug)->with(["author", "category"])->get();
         $comment_reports_categories = CommentReportsCategory::all();
         $comments = '';
+        $likes = '';
+        $liked = '';
+        $isRulesConfirmed = '';
 
         foreach($blogObj as $blog) {
             // Take previous and next blog
@@ -56,6 +83,15 @@ class SiteController extends Controller
 
             // Get comments
             $comments = $this->getComments($blog->id);
+
+            // Get likes
+            $likes = $this->getLikeBlog($blog->id);
+
+            // Is blog liked ?
+            $liked = $this->isBlogLiked($blog->id);
+
+            // Is commenting rules confirmed ?
+            $isRulesConfirmed = $this->isRulesConfirmed();
         }
 
         return Inertia::render("Blog", [
@@ -63,7 +99,10 @@ class SiteController extends Controller
             "previous" => $previous,
             "next" => $next,
             "commentReportsCategories" => $comment_reports_categories,
-            "comments" => $comments
+            "comments" => $comments,
+            "likesData" => $likes,
+            "isLiked" => $liked,
+            "isRulesConfirmed" => $isRulesConfirmed
         ]);
     }
 }
