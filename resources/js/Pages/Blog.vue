@@ -236,7 +236,7 @@ export default {
             </div>
 
             <div class="comments-container max-w-xl mx-5" v-if="comments != undefined">
-                <p class="text-lg font-bold text-gray-500 mt-5">{{ comments.length }} comments</p>
+                <p class="text-lg font-bold text-gray-500 mt-5">{{ commentsData.length }} comments</p>
                 <div v-for="comment in commentsData" class="group single-comment-container">
                     <div class="text-base font-semibold text-gray-600 flex items-center justify-between">
                         <div class="flex mx-0">
