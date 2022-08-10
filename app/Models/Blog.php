@@ -5,11 +5,11 @@ namespace App\Models;
 use Conner\Likeable\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Redis;
+use Spatie\Tags\HasTags;
 
 class Blog extends Model
 {
-    use HasFactory, Likeable;
+    use HasFactory, Likeable, HasTags;
 
     protected $guarded = ["id"];
 

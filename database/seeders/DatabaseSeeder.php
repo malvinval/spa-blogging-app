@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+
         Blog::factory(10)->create();
 
         CommentReportsCategory::create([
@@ -54,6 +55,5 @@ class DatabaseSeeder extends Seeder
         CommentReportsCategory::create([
             "name" => 'Misinformation',
         ]);
-
     }
 }

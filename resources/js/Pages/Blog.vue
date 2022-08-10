@@ -11,7 +11,9 @@
         comments: Object,
         isLiked: Boolean,
         likesData: Number,
-        isRulesConfirmed: Boolean
+        isRulesConfirmed: Boolean,
+        tags: Object,
+        relatedBlog: Object
     });
 </script>
 
@@ -24,6 +26,8 @@ export default {
             blogId: this.blogObj[0].id,
             likes: this.likesData,
             liked: this.isLiked,
+            tags: this.tags,
+            relatedBlog: this.relatedBlog,
             commentsData: this.comments,
             rulesConfirmed: this.isRulesConfirmed,
             commentBody: '',
@@ -42,12 +46,6 @@ export default {
                     this.liked = response.data.isLiked;
                 });
         },
-        // isRulesConfirmed() {
-        //     axios.post('/rules-confirmed')
-        //         .then((response) => {
-        //             this.rulesConfirmed = response.data.isRulesConfirmed;
-        //         });
-        // },
         setRulesConfirmed() {
             swal({
                 text: "Can you promise us not to violate the commenting rules that we have provided ?",
@@ -174,19 +172,31 @@ export default {
             <hr class="border-b-2 border-gray-400 mb-8 mx-4">
 
             <!-- Related Blog -->
-
             <blockquote class="border-l-4 border-teal-500 bg-slate-200 mx-5 my-8 pl-8 md:pl-12 py-2">
-                Related blog :
-                <Link :href="route('blogs')" class="text-teal-600 hover:underline">Building Single Page Apps using
-                Laravel Breeze</Link>
+                <span v-if="relatedBlog">
+                    <span class="text-slate-500">Related blog </span>:
+                    <Link :href="'/blog/' + relatedBlog.slug" class="text-teal-600 hover:underline">{{ relatedBlog.title }}</Link>
+                </span>
+                <span v-else>
+                    <p class="text-slate-600">
+                        No related blogs yet.
+                    </p>
+                </span>
             </blockquote>
 
             <!-- /Related Blog -->
 
             <!-- Tags -->
-            <div class="text-base md:text-sm text-gray-500 px-4 py-6">
+            <div v-if="relatedBlog" class="text-base md:text-sm text-gray-500 px-4 py-6">
                 Tags :
-                <Link class="btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">java</Link>
+                <p v-for="tag in blog.tags" class="mr-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
+                    <span v-for="tagName in tag.name">{{ tagName }}</span> 
+                </p>
+            </div>
+            <div v-else class="text-base md:text-sm text-gray-500 px-4 py-6">
+                <p class="italic text-slate-600">
+                    No tags provided.
+                </p>
             </div>
             <!-- /Tags -->
 

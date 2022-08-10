@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
 
-
 class SiteController extends Controller
 {
     public function blogs() {
@@ -72,6 +71,9 @@ class SiteController extends Controller
         $likes = '';
         $liked = '';
         $isRulesConfirmed = '';
+        $tags = '';
+        $related_blogs = [];
+        $related_blog = '';
 
         foreach($blogObj as $blog) {
             // Take previous and next blog
@@ -92,6 +94,20 @@ class SiteController extends Controller
 
             // Is commenting rules confirmed ?
             $isRulesConfirmed = $this->isRulesConfirmed();
+
+            // Get tags
+            $tags = $blog->tags;
+
+            // Get random related blogs
+            foreach($tags as $tag) {
+                array_push($related_blogs, $tag->name);
+            }
+            $related_blogs = Blog::withAnyTags($related_blogs)->where("id", "!=", $blog->id)->get();
+
+            if(sizeof($related_blogs) > 0) {
+                $related_blog_index = mt_rand(0, sizeof($related_blogs) - 1);
+                $related_blog = $related_blogs[$related_blog_index];
+            }
         }
 
         return Inertia::render("Blog", [
@@ -102,7 +118,9 @@ class SiteController extends Controller
             "comments" => $comments,
             "likesData" => $likes,
             "isLiked" => $liked,
-            "isRulesConfirmed" => $isRulesConfirmed
+            "isRulesConfirmed" => $isRulesConfirmed,
+            "tags" => $tags,
+            "relatedBlog" => $related_blog
         ]);
     }
 }
