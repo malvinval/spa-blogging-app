@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\CommentReportsCategory;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,12 @@ class SiteController extends Controller
 {
     public function blogs() {
         $blogs = Blog::with(["author", "category"])->filter(request(["search", "category"]))->latest()->get();
-        return Inertia::render("Blogs", compact("blogs"));
+        $categories = Category::all();
+
+        return Inertia::render("Blogs", [
+            "blogs" => $blogs,
+            "categories" => $categories
+        ]);
     }
 
     private function setBlogCookie($blog) {

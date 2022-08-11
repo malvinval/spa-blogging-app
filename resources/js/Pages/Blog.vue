@@ -189,7 +189,7 @@ export default {
             <!-- Tags -->
             <div v-if="relatedBlog" class="text-base md:text-sm text-gray-500 px-4 py-6">
                 Tags :
-                <p v-for="tag in blog.tags" class="mr-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
+                <p v-for="tag in blog.tags" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
                     <span v-for="tagName in tag.name">{{ tagName }}</span> 
                 </p>
             </div>

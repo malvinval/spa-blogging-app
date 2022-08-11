@@ -34,7 +34,7 @@ class Blog extends Model
 
         $query->when($filters['category'] ?? false, function($query, $category) { 
             return $query->whereHas("category", function($query) use ($category) {
-                $query->where('name',$category);
+                $query->where('slug',$category)->orWhere('name', $category);
             });
         });
 

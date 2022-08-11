@@ -5,7 +5,8 @@
     import 'bootstrap-icons/font/bootstrap-icons.css';
 
     defineProps({
-        blogs: Object
+        blogs: Object,
+        categories: Object
     });
 </script>
 
@@ -15,7 +16,7 @@
             return {
                 moment: moment,
                 searchValue: '',
-                blogsDataSize: this.blogs.length
+                blogsDataSize: this.blogs.length,
             }
         },
     }
@@ -27,9 +28,20 @@
     <Head title="Blogs" />
 
     <BreezeAuthenticatedLayout>
-        <div v-if="blogsDataSize > 0" class="mt-10 mx-auto max-w-7xl">
-            <div class="filter-container mx-5 flex justify-end">
-                <!-- insert element here -->
+
+        <div v-if="blogsDataSize > 0" class="mt-10 mx-auto max-w-7xl flex justify-end items-center">
+            <div class="dropdown">
+                <label tabindex="0" class="btn border-none text-white hover:bg-accent-focus bg-accent m-1">
+                    <span class="text-2xl"><i class="bi bi-list"></i></span>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li v-for="category in categories">
+                        <Link :href="'/blogs?category='+category.slug">{{ category.name }}</Link>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="filter-container mr-5 ml-1">
                 <div class="form-control">
                     <div :class="searchValue == '' ? '' : 'input-group'">
                         <input v-model="searchValue" type="text" placeholder="Search a title..." class="text-gray-600 input input-bordered border-accent bg-transparent" autocomplete="off"/>
@@ -45,7 +57,7 @@
             <div v-for="(blog, index) in blogs" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-light text-gray-600">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
-                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-gray-500">{{ blog.category.name }}</a>
+                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</a>
                 </div> 
                 <div class="mt-2">
                     <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800">{{ blog.title }}</Link> 
