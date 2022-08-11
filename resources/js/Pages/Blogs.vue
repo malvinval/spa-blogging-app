@@ -40,7 +40,6 @@
                     </li>
                 </ul>
             </div>
-
             <div class="filter-container mr-5 ml-1">
                 <div class="form-control">
                     <div :class="searchValue == '' ? '' : 'input-group'">
@@ -57,7 +56,7 @@
             <div v-for="(blog, index) in blogs" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-light text-gray-600">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
-                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</a>
+                    <Link :href="'/blogs/?category='+blog.category.slug" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</Link>
                 </div> 
                 <div class="mt-2">
                     <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800">{{ blog.title }}</Link> 
@@ -76,6 +75,8 @@
             </div>
 
             <p v-if="blogsDataSize == 0" class="text-teal-500 my-10 font-bold">No blogs found.</p>
-        </div> 
+        </div>
+
+    
     </BreezeAuthenticatedLayout>
 </template>

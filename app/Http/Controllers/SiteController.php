@@ -13,7 +13,7 @@ use Inertia\Inertia;
 class SiteController extends Controller
 {
     public function blogs() {
-        $blogs = Blog::with(["author", "category"])->filter(request(["search", "category"]))->latest()->get();
+        $blogs = Blog::with(["author", "category"])->filter(request(["search", "category", "tag"]))->latest()->get();
         $categories = Category::all();
 
         return Inertia::render("Blogs", [

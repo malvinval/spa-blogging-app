@@ -162,8 +162,8 @@ export default {
             <!--Category -->
             <div class="text-base flex justify-between md:text-sm text-gray-500 px-4 py-6">
                 <span>
-                    Category:
-                    <Link class="text-base md:text-sm text-teal-500 no-underline hover:underline">{{ blog.category.name
+                    Category :
+                    <Link :href="'/blogs/?category='+blog.category.slug" class="text-base md:text-sm text-teal-500 no-underline hover:underline">{{ blog.category.name
                     }}</Link>
                 </span>
             </div>
@@ -189,9 +189,9 @@ export default {
             <!-- Tags -->
             <div v-if="relatedBlog" class="text-base md:text-sm text-gray-500 px-4 py-6">
                 Tags :
-                <p v-for="tag in blog.tags" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
-                    <span v-for="tagName in tag.name">{{ tagName }}</span> 
-                </p>
+                <Link v-for="tag in blog.tags" :href="'/blogs/?tag='+tag.slug.en" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
+                    <span>{{ tag.name.en }}</span> 
+                </Link>
             </div>
             <div v-else class="text-base md:text-sm text-gray-500 px-4 py-6">
                 <p class="italic text-slate-600">

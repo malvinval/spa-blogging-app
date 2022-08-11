@@ -34,8 +34,12 @@ class Blog extends Model
 
         $query->when($filters['category'] ?? false, function($query, $category) { 
             return $query->whereHas("category", function($query) use ($category) {
-                $query->where('slug',$category)->orWhere('name', $category);
+                $query->where('slug',$category);
             });
+        });
+
+        $query->when($filters['tag'] ?? false, function($query, $tag) {
+            return $query->withAllTags([$tag])->get();
         });
 
         $query->when($filters['user'] ?? false, function($query, $user) { 
