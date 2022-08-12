@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
             "slug" => "culinary"
         ]);
 
-        User::factory(10)->create();
+        User::factory(20)->create();
 
-        Blog::factory(10)->create();
+        Blog::factory(20)->create();
 
         CommentReportsCategory::create([
             "name" => 'Unwanted commercial content or spam',

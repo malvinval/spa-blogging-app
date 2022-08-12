@@ -22,12 +22,10 @@ export default {
     data() {
         return {
             moment: moment,
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            // csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             blogId: this.blogObj[0].id,
             likes: this.likesData,
             liked: this.isLiked,
-            tags: this.tags,
-            relatedBlog: this.relatedBlog,
             commentsData: this.comments,
             rulesConfirmed: this.isRulesConfirmed,
             commentBody: '',

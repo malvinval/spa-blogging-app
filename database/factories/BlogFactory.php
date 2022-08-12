@@ -23,7 +23,7 @@ class BlogFactory extends Factory
             "slug" => $this->faker->slug(),
             "body" => $this->faker->paragraph(),
             "excerpt" => "Lorem ipsum...",
-            "author_id" => mt_rand(1, 10),
+            "author_id" => mt_rand(1, 20),
             "category_id" => mt_rand(1, 3),
             "tags" => ['Programming', 'Java', 'Informatika', 'Coding']
         ];

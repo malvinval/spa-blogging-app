@@ -3,10 +3,11 @@
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import moment from "moment";
     import 'bootstrap-icons/font/bootstrap-icons.css';
+    import Pagination from '@/Components/Pagination.vue'
 
     defineProps({
         blogs: Object,
-        categories: Object
+        categories: Object,
     });
 </script>
 
@@ -16,12 +17,14 @@
             return {
                 moment: moment,
                 searchValue: '',
-                blogsDataSize: this.blogs.length,
+                blogsDataSize: this.blogs.data.length,
             }
         },
-    }
 
-    
+        components: {
+            Pagination
+        },
+    } 
 </script>
 
 <template>
@@ -51,9 +54,10 @@
                 </div>
             </div>
         </div>
+
         
         <div class="mx-auto max-w-7xl flex flex-wrap justify-evenly">
-            <div v-for="(blog, index) in blogs" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
+            <div v-for="(blog, index) in blogs.data" :key="blog.id" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-light text-gray-600">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
                     <Link :href="'/blogs/?category='+blog.category.slug" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</Link>
@@ -69,14 +73,19 @@
 
                     <div class="flex items-center">
                         <img src="https://picsum.photos/200" alt="Author Photo" class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"> 
-                        <a class="font-bold text-right cursor-pointer text-slate-600">{{ blog.author.name }}</a>
+                        <Link class="font-bold text-right cursor-pointer text-slate-600">{{ blog.author.name }}</Link>
                     </div>
                 </div>
             </div>
 
             <p v-if="blogsDataSize == 0" class="text-teal-500 my-10 font-bold">No blogs found.</p>
+            
+            <div class="mx-auto my-10">
+                <Pagination :links="blogs.links" />
+            </div>
         </div>
 
-    
+
+
     </BreezeAuthenticatedLayout>
 </template>
