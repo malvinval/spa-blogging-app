@@ -35,7 +35,7 @@
         <div v-if="blogsDataSize > 0" class="mt-10 mx-auto max-w-7xl flex justify-end items-center">
             <div class="dropdown">
                 <label tabindex="0" class="btn border-none text-white hover:bg-accent-focus bg-accent m-1">
-                    <span class="text-2xl"><i class="bi bi-list"></i></span>
+                    <span class="text-base"><i class="bi bi-ui-radios"></i></span>
                 </label>
                 <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li v-for="category in categories">
@@ -55,7 +55,6 @@
             </div>
         </div>
 
-        
         <div class="mx-auto max-w-7xl flex flex-wrap justify-evenly">
             <div v-for="(blog, index) in blogs.data" :key="blog.id" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
                 <div class="flex items-center justify-between">

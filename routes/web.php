@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DashboardBlogsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +28,12 @@ Route::get('/home', function () {
 
 Route::get('/blogs', [SiteController::class, "blogs"])->middleware(['auth', 'verified'])->name('blogs');
 Route::get('/blog/{blogs:slug}', [SiteController::class, "blog"])->middleware(['auth', 'verified'])->name('blog');
+
+Route::get('/dashboard', [DashboardController::class, "index"])->middleware(['auth', 'verified'])->name("dashboard");
+Route::resource('/dashboard/blogs', DashboardBlogsController::class)->middleware(['auth', 'verified']);
+
+// Route::resource('/dashboard/blogs', DashboardBlogsController::class)->middleware(['auth', 'verified']);
+
 
 // Blog API
 Route::post('/like-blog/{id}',[BlogController::class,'likeBlog'])->name('like.blog');

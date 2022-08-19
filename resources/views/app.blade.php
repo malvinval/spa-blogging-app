@@ -18,8 +18,10 @@
         @vite('resources/js/app.js')
         @inertiaHead
     </head>
+
     @include('sweetalert::alert')
     <body class="font-quicksand antialiased">
         @inertia
     </body>
+   
 </html>
