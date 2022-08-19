@@ -52,7 +52,8 @@
         <div class="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col p-10">
-                <div class="ml-auto">
+                <div class="flex justify-between">
+                    <button class="btn btn-primary text-white">New</button>
                     <label for="my-drawer-2" class="btn btn-accent btn-outline drawer-button text-2xl lg:hidden">
                         <i class="bi bi-list"></i>
                     </label>
