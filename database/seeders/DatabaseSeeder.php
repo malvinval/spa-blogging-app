@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(20)->create();
 
-        Blog::factory(20)->create();
+        // Blog::factory(20)->create();
 
         CommentReportsCategory::create([
             "name" => 'Unwanted commercial content or spam',

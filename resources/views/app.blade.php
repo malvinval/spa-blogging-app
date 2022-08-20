@@ -13,6 +13,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 
+        {{-- Trix --}}
+
+        <link rel="stylesheet" href="{{ asset('/css/trix.css') }}">
+        <script src="{{ asset('/js/trix.js') }}"></script>
+
         <!-- Scripts -->
         @routes
         @vite('resources/js/app.js')

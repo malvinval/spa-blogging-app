@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class DashboardBlogsController extends Controller
 {
@@ -36,7 +37,12 @@ class DashboardBlogsController extends Controller
      */
     public function create()
     {
-        //
+        $route_name = Route::current()->getName();
+        $categories = Category::all();
+        return Inertia::render("Dashboard", [
+            "route_name" => $route_name,
+            "categories" => $categories
+        ]);
     }
 
     /**
@@ -47,7 +53,25 @@ class DashboardBlogsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->params["title"];
+        $body = $request->params["body"];
+        $excerpt = Str::limit($body, 40);
+        $category_id = $request->params["categoryId"];
+        $slug = $request->params["slug"];
+
+        Blog::create([
+            "title" => $title,
+            "slug" => $slug,
+            "excerpt" => $excerpt,
+            "body" => $body,
+            "category_id" => $category_id,
+            "author_id" => Auth::user()->id
+        ]);
+        
+        
+        return response()->json([
+            "success" => "Your blog has been published successfully !"
+        ]);
     }
 
     /**
@@ -92,8 +116,8 @@ class DashboardBlogsController extends Controller
      */
     public function destroy($id)
     {
-        $blog = Blog::find($id);
-        $blog->destroy($id);
+        Blog::find($id)->delete();
+        
         return response()->json([
             'success' => "Blog deleted successfully !",
         ]);
