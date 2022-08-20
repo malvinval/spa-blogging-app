@@ -52,9 +52,11 @@
         <div class="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col p-10">
-                <div class="flex justify-between">
-                    <button class="btn btn-primary text-white">New</button>
-                    <label for="my-drawer-2" class="btn btn-accent btn-outline drawer-button text-2xl lg:hidden">
+                <div class="flex justify-end">
+                    <button v-if="route_name == 'blogs.index'" class="btn btn-accent ml-2 border-none bg-teal-50 hover:bg-teal-50 text-teal-500 rounded-full text-2xl">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                    <label for="my-drawer-2" :class="route_name == 'dashboard' ? 'ml-auto' : ''" class="btn btn-accent ml-2 border-none bg-teal-50 text-teal-500 hover:bg-teal-50 rounded-full drawer-button text-2xl lg:hidden">
                         <i class="bi bi-list"></i>
                     </label>
                 </div>
