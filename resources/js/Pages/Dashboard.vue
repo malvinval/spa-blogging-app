@@ -18,7 +18,9 @@
                 newBlogTitle: null,
                 newBlogCategoryId: null,
                 newBlogBody: null,
-                newBlogSlug: null
+                newBlogSlug: null,
+                tags: [],
+                inputtedTag: ''
             }
         },
         methods: {
@@ -33,7 +35,8 @@
                             title: this.newBlogTitle,
                             slug: this.newBlogSlug,
                             body: this.newBlogBody,
-                            categoryId: this.newBlogCategoryId
+                            categoryId: this.newBlogCategoryId,
+                            tags: this.tags
                         }
                     }).then((response) => {
                             swal({
@@ -67,7 +70,16 @@
                         })
                     }
                 }); 
-            }
+            },
+            deleteTag(arr, value) {
+                return arr.filter(function(x){
+                    return x != value;
+                });
+            },
+            insertTag(inputtedTag) {
+                this.tags.push(inputtedTag.toUpperCase());
+                this.inputtedTag = '';
+            },
         },
         components: {
             Pagination,
@@ -154,8 +166,35 @@
                                 
                                 <textarea v-model="newBlogBody" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea>
                             </div>
+
+                            <!-- Tags input -->
+                            <div class="w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
+                                
+                                <div class="flex flex-col items-center mt-1 text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
+                                    <div class="w-full sm:mb-2">
+                                        <label for="input1">
+                                            <span class="ml-2 text-sm sm:text-base">Tags (press ENTER to add)</span>
+                                            <input @keyup.enter="insertTag(inputtedTag)" v-model="inputtedTag" id="input1" minlength="5" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
+                                            type="text" />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class='pt-2  flex flex-wrap rounded-lg'>
+                                    <span v-for="tag in tags"
+                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500">
+                                        {{ tag }}
+                                        <svg @click="tags = deleteTag(tags, tag)" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <button @click="createBlog()" class="btn btn-accent">Submit</button>
+                        <button @click="createBlog()" class="btn btn-accent text-white">Submit</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +206,7 @@
                         <li class="sidebar-navigator">
                             <Link :href="'/blogs'" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white">
                                 <div class="sidebar-icon-container px-3">
-                                    <i class="bi bi-house-door-fill"></i>
+                                    <i class="bi bi-arrow-left"></i>
                                 </div>
                                 <div>
                                     <p class="text-opacity-40">Back to blogs</p>

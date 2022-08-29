@@ -35,6 +35,9 @@ export default {
             reportCommentSuccessText: ''
         }
     },
+    // mounted() {
+    //     console.log(this.tags);
+    // },
 
     methods: {
         like() {
@@ -185,7 +188,7 @@ export default {
             <!-- /Related Blog -->
 
             <!-- Tags -->
-            <div v-if="relatedBlog" class="text-base md:text-sm text-gray-500 px-4 py-6">
+            <div v-if="tags" class="text-base md:text-sm text-gray-500 px-4 py-6">
                 Tags :
                 <Link v-for="tag in blog.tags" :href="'/blogs/?tag='+tag.slug.en" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
                     <span>{{ tag.name.en }}</span> 

@@ -58,16 +58,17 @@ class DashboardBlogsController extends Controller
         $excerpt = Str::limit($body, 40);
         $category_id = $request->params["categoryId"];
         $slug = $request->params["slug"];
+        $tags = $request->params["tags"];
 
-        Blog::create([
+        $blog = Blog::create([
             "title" => $title,
             "slug" => $slug,
             "excerpt" => $excerpt,
             "body" => $body,
             "category_id" => $category_id,
-            "author_id" => Auth::user()->id
+            "author_id" => Auth::user()->id,
         ]);
-        
+        $blog->attachTags($tags);
         
         return response()->json([
             "success" => "Your blog has been published successfully !"

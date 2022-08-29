@@ -116,6 +116,7 @@ class SiteController extends Controller
             }
         }
 
+
         return Inertia::render("Blog", [
             "blogObj" => $blogObj,
             "previous" => $previous,
