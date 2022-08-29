@@ -94,7 +94,17 @@ class DashboardBlogsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $blog = Blog::find($id);
+        $tags = $blog->tags;
+        $route_name = Route::current()->getName();
+        $categories = Category::all();
+
+        return Inertia::render("Dashboard", [
+            "route_name" => $route_name,
+            "categories" => $categories,
+            "blog" => $blog,
+            "blogTags" => $tags
+        ]);
     }
 
     /**
@@ -106,7 +116,27 @@ class DashboardBlogsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $blog = Blog::find($id);
+        $title = $request->params["title"];
+        $body = $request->params["body"];
+        $excerpt = Str::limit($body, 40);
+        $category_id = $request->params["categoryId"];
+        $slug = $request->params["slug"];
+        // $tags = $request->params["tags"];
+
+        $blog->update([
+            "title" => $title,
+            "slug" => $slug,
+            "excerpt" => $excerpt,
+            "body" => $body,
+            "category_id" => $category_id,
+            "author_id" => Auth::user()->id,
+        ]);
+        // $blog->tags = $tags;
+
+        return response()->json([
+            "success" => "Your blog has been updated successfully !"
+        ]);
     }
 
     /**

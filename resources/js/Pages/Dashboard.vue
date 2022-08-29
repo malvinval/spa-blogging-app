@@ -6,7 +6,9 @@
     defineProps({
         route_name: String,
         blogs: Object,
-        categories: Object
+        categories: Object,
+        blog: Object,
+        blogTags: Object
     })
 </script>
 
@@ -25,7 +27,6 @@
         },
         methods: {
             createBlog() {
-                
                 if(this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) {
                     let preslug = this.newBlogTitle;
                     preslug = preslug.replace(/ /g,"-");
@@ -50,6 +51,36 @@
                     )
                 }
             },
+
+            editBlog(id) {
+                this.newBlogTitle = this.blog.title;
+                this.newBlogCategoryId = this.blog.category_id;
+                this.newBlogBody = this.blog.body;
+               
+                if(this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) {
+                    let preslug = this.newBlogTitle;
+                    preslug = preslug.replace(/ /g,"-");
+                    this.newBlogSlug = preslug.toLowerCase();
+                    axios.put('/dashboard/blogs/'+id, {
+                        params: {
+                            title: this.newBlogTitle,
+                            slug: this.newBlogSlug,
+                            body: this.newBlogBody,
+                            categoryId: this.newBlogCategoryId,
+                        }
+                    }).then((response) => {
+                            swal({
+                                title: "Yay !",
+                                text: response.data.success,
+                                icon: "success",
+                                timer: 3000,
+                                buttons: false
+                            });
+                        }
+                    )
+                }
+            },
+
             deleteBlog(blogId) {
                 swal({
                     text: "This blog will be deleted permanently. Please proceed with caution !",
@@ -123,7 +154,7 @@
                         <div class="flex items-center justify-between mt-4">
                             <div class="flex items-center w-">
                                 <Link :href="'/blog/'+blog.slug" class="btn btn-accent btn-outline mr-3">Read more</Link>
-                                <Link class="group btn btn-warning btn-outline mr-3"><i class="bi bi-pen group-hover:text-white"></i></Link>
+                                <Link :href="'/dashboard/blogs/'+blog.id+'/edit'" class="group btn btn-warning btn-outline mr-3"><i class="bi bi-pen group-hover:text-white"></i></Link>
                                 <button @click="deleteBlog(blog.id)" class="group btn btn-error btn-outline mr-3"><i class="bi bi-trash3 group-hover:text-white"></i></button>
                             </div>
                         </div>
@@ -195,6 +226,43 @@
                             </div>
                         </div>
                         <button @click="createBlog()" class="btn btn-accent text-white">Submit</button>
+                    </div>
+                </div>
+
+                <!-- Dashboard (edit blogs) -->
+                <div v-else-if="route_name == 'blogs.edit'">
+                    
+                    <h1 class="lg:text-4xl text-2xl text-teal-900">Edit blog</h1>
+                    <div class="mt-10">
+                        <div class="form-control w-full max-w-lg mb-10">
+                        
+                            <!-- Title edit input -->
+                            <div class="w-full">
+                                <label class="label">
+                                    <span class="label-text text-base">Title</span>
+                                </label>
+                                
+                                <input v-model="this.blog.title" type="text" class="input input-bordered w-full max-w-xs text-gray-600 border-slate-300 bg-transparent" />
+                            </div>
+
+                            <!-- Category edit input -->
+                            <div class="mt-8">
+                                <select class="select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
+                                    <option disabled selected>Pick category</option>
+                                    <option v-for="category in categories" @click="newBlogCategoryId = category.id">{{ category.name }}</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Body edit input -->
+                            <div class="mt-5">
+                                <label class="label">
+                                    <span class="label-text text-base">Caption</span>
+                                </label>
+                                
+                                <textarea v-model="this.blog.body" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea>
+                            </div>
+                        </div>
+                        <button @click="editBlog(this.blog.id)" class="btn btn-accent text-white">Update</button>
                     </div>
                 </div>
             </div>
