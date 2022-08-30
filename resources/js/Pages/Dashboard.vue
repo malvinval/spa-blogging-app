@@ -2,6 +2,8 @@
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import Pagination from '@/Components/Pagination.vue';
     import moment from "moment";
+    import { QuillEditor } from '@vueup/vue-quill'
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     defineProps({
         route_name: String,
@@ -14,6 +16,9 @@
 
 <script>
     export default {
+        components: {
+            QuillEditor
+        },
         data() {
             return {
                 moment: moment,
@@ -196,41 +201,42 @@
                 <div v-else-if="route_name == 'blogs.create'">
                     <h1 class="lg:text-4xl text-2xl text-teal-900">Create new blog</h1>
                     <div class="mt-10">
-                        <div class="form-control w-full max-w-lg mb-10">
+                        <div class="form-control max-w-7xl mb-10">
                             <!-- Title input -->
-                            <div class="w-full">
+                            <div class="md:w-1/2 w-full">
                                 <label class="label">
                                     <span class="label-text text-base">Title</span>
                                 </label>
                                 
-                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full text-gray-600 border-slate-300 bg-transparent" />
+                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full text-gray-600 border-slate-300 text-base bg-transparent" />
                             </div>
 
                             <!-- Category input -->
                             <div class="mt-8">
-                                <select class="select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
+                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
                                     <option disabled selected>Pick category</option>
                                     <option v-for="category in categories" @click="newBlogCategoryId = category.id">{{ category.name }}</option>
                                 </select>
                             </div>
                             
                             <!-- Body input -->
-                            <div class="mt-5">
+                            <div class="mt-5 text-gray-600">
                                 <label class="label">
                                     <span class="label-text text-base">Caption</span>
                                 </label>
                                 
-                                <textarea v-model="newBlogBody" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea>
+                                <!-- <textarea v-model="newBlogBody" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea> -->
+                                <QuillEditor theme="snow" v-model:content="newBlogBody" contentType="html" />
                             </div>
 
                             <!-- Tags input -->
-                            <div class="w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
+                            <div class="md:w-1/2 w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
                                 
                                 <div class="flex flex-col items-center mt-1 text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
                                     <div class="w-full sm:mb-2">
                                         <label for="input1">
                                             <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
-                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 peer"
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 peer"
                                             type="text" />
                                         </label>
                                     </div>
@@ -259,41 +265,40 @@
                     
                     <h1 class="lg:text-4xl text-2xl text-teal-900">Edit blog</h1>
                     <div class="mt-10">
-                        <div class="form-control w-full max-w-lg mb-10">
+                        <div class="form-control max-w-7xl mb-10">
                         
                             <!-- Title edit input -->
-                            <div class="w-full">
+                            <div class="md:w-1/2 w-full">
                                 <label class="label">
                                     <span class="label-text text-base">Title</span>
                                 </label>
                                 
-                                <input v-model="this.blog.title" type="text" class="input input-bordered w-full max-w-xs text-gray-600 border-slate-300 bg-transparent" />
+                                <input v-model="this.blog.title" type="text" class="input text-base input-bordered w-full text-gray-600 border-slate-300 bg-transparent" />
                             </div>
 
                             <!-- Category edit input -->
                             <div class="mt-8">
-                                <select class="select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
+                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
                                     <option disabled selected>Pick category</option>
                                     <option v-for="category in categories" @click="newBlogCategoryId = category.id">{{ category.name }}</option>
                                 </select>
                             </div>
                             
                             <!-- Body edit input -->
-                            <div class="mt-5">
+                            <div class="mt-5 text-gray-600">
                                 <label class="label">
                                     <span class="label-text text-base">Caption</span>
                                 </label>
-                                
-                                <textarea v-model="this.blog.body" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea>
+                                <QuillEditor theme="snow" v-model:content="this.blog.body" contentType="html" />
                             </div>
 
                             <!-- Tags edit input -->
-                            <div class="w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
+                            <div class="md:w-1/2 w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
                                 <div class="flex flex-col items-center mt-1 text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
                                     <div class="w-full sm:mb-2">
                                         <label for="input1">
                                             <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
-                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 peer"
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 peer"
                                             type="text" />
                                         </label>
                                     </div>

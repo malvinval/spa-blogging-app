@@ -20,3 +20,46 @@
 .single-comment-container {
     margin-top: 1.25rem/* 20px */;
 }
+
+.ql-editor {
+    min-height: 500px;
+    font-size: 1.125rem;
+}
+
+.ql-editor ul, .blog-body ul {
+	list-style-type: disc;
+	padding-left: 1rem;
+}
+
+.ql-editor ol, .blog-body ol {
+	list-style-type: decimal;
+	padding-left: 1rem;
+}
+
+.ql-editor h1, .blog-body h1 {
+	font-size: 1.5em;
+}
+
+.ql-editor h2, .blog-body h2 {
+	font-size: 1.17em;
+}
+
+.ql-editor h3, .blog-body h3 {
+	font-size: 1em;
+}
+
+.ql-editor h4, .blog-body h4 {
+	font-size: 0.83em;
+}
+
+.ql-editor h5, .blog-body h5 {
+	font-size: 0.67em;
+}
+
+.ql-editor h6, .blog-body h6 {
+	font-size: 0.50em;
+}
+
+.ql-editor a, .blog-body a {
+	text-decoration: underline;
+}

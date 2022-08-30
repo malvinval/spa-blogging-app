@@ -155,9 +155,7 @@ export default {
                 <!--Post Content-->
 
                 <!--Body-->
-                <p class="py-6 text-justify">
-                    {{ blog.body }}
-                </p>
+                <p class="blog-body py-6 text-justify text-gray-600" v-html="blog.body"></p>
             </div>
 
             <!--Category -->
