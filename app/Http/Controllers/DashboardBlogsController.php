@@ -98,7 +98,7 @@ class DashboardBlogsController extends Controller
         $tags = $blog->tags;
         $route_name = Route::current()->getName();
         $categories = Category::all();
-
+        // dd($tags);
         return Inertia::render("Dashboard", [
             "route_name" => $route_name,
             "categories" => $categories,
@@ -122,7 +122,7 @@ class DashboardBlogsController extends Controller
         $excerpt = Str::limit($body, 40);
         $category_id = $request->params["categoryId"];
         $slug = $request->params["slug"];
-        // $tags = $request->params["tags"];
+        $tags = $request->params["tags"];
 
         $blog->update([
             "title" => $title,
@@ -132,7 +132,7 @@ class DashboardBlogsController extends Controller
             "category_id" => $category_id,
             "author_id" => Auth::user()->id,
         ]);
-        // $blog->tags = $tags;
+        $blog->tags = $tags;
 
         return response()->json([
             "success" => "Your blog has been updated successfully !"

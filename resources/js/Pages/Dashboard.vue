@@ -8,7 +8,7 @@
         blogs: Object,
         categories: Object,
         blog: Object,
-        blogTags: Object
+        blogTags: Array
     })
 </script>
 
@@ -21,11 +21,25 @@
                 newBlogCategoryId: null,
                 newBlogBody: null,
                 newBlogSlug: null,
+                newTags: null,
                 tags: [],
+                tempTags: this.blogTags,
                 inputtedTag: ''
             }
         },
+
+        created() {
+            this.isTagsRendered();
+        },
+        
         methods: {
+            isTagsRendered() {
+                if(this.tempTags) {
+                    this.tempTags.forEach(tag => {
+                        this.tags.push(tag.name.en);
+                    });
+                }
+            },
             createBlog() {
                 if(this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) {
                     let preslug = this.newBlogTitle;
@@ -56,6 +70,7 @@
                 this.newBlogTitle = this.blog.title;
                 this.newBlogCategoryId = this.blog.category_id;
                 this.newBlogBody = this.blog.body;
+                this.newTags = this.tags;
                
                 if(this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) {
                     let preslug = this.newBlogTitle;
@@ -67,6 +82,7 @@
                             slug: this.newBlogSlug,
                             body: this.newBlogBody,
                             categoryId: this.newBlogCategoryId,
+                            tags: this.newTags
                         }
                     }).then((response) => {
                             swal({
@@ -269,6 +285,32 @@
                                 </label>
                                 
                                 <textarea v-model="this.blog.body" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea>
+                            </div>
+
+                            <!-- Tags edit input -->
+                            <div class="w-full mt-5 items-center bg-transparent rounded-2xl overflow-hidden sm:max-w-4xl\">
+                                <div class="flex flex-col items-center mt-1 text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
+                                    <div class="w-full sm:mb-2">
+                                        <label for="input1">
+                                            <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 peer"
+                                            type="text" />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class='pt-2  flex flex-wrap rounded-lg'>
+                                    <span v-for="tag in tags"
+                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500">
+                                        {{ tag }}
+                                        <svg @click="tags = deleteTag(tags, tag)" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <button @click="editBlog(this.blog.id)" class="btn btn-accent text-white">Update</button>
