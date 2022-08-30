@@ -111,6 +111,15 @@
                 this.tags.push(inputtedTag.toUpperCase());
                 this.inputtedTag = '';
             },
+            isInsertTag(inputtedTag) {
+                if(inputtedTag.includes(",")) {
+                    this.inputtedTag = '';
+                    inputtedTag = inputtedTag.replace(',', '');
+                    if(!inputtedTag.includes(",")) {
+                        /^\s*$/.test(inputtedTag) ? '' : this.insertTag(inputtedTag);
+                    }
+                }
+            }
         },
         components: {
             Pagination,
@@ -178,7 +187,7 @@
                                     <span class="label-text text-base">Title</span>
                                 </label>
                                 
-                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full max-w-xs text-gray-600 border-slate-300 bg-transparent" />
+                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full text-gray-600 border-slate-300 bg-transparent" />
                             </div>
 
                             <!-- Category input -->
@@ -204,8 +213,8 @@
                                 <div class="flex flex-col items-center mt-1 text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
                                     <div class="w-full sm:mb-2">
                                         <label for="input1">
-                                            <span class="ml-2 text-sm sm:text-base">Tags (press ENTER to add)</span>
-                                            <input @keyup.enter="insertTag(inputtedTag)" v-model="inputtedTag" id="input1" minlength="5" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
+                                            <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full rounded-2xl outline-none placeholder:text-gray-400 peer"
                                             type="text" />
                                         </label>
                                     </div>
