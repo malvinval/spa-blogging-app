@@ -29,7 +29,7 @@
                 newTags: null,
                 tags: [],
                 tempTags: this.blogTags,
-                inputtedTag: ''
+                inputtedTag: '',
             }
         },
 
@@ -75,8 +75,10 @@
                 this.newBlogCategoryId = this.blog.category_id;
                 this.newBlogBody = this.blog.body;
                 this.newTags = this.tags;
-               
-                if(this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) {
+                
+                const blogBodyChars = document.querySelector(".ql-editor").textContent;
+
+                if((this.newBlogTitle && this.newBlogBody && this.newBlogCategoryId) && !/^\s*$/.test(blogBodyChars)) {
                     let preslug = this.newBlogTitle;
                     preslug = preslug.replace(/ /g,"-");
                     this.newBlogSlug = preslug.toLowerCase();
@@ -223,8 +225,6 @@
                                 <label class="label">
                                     <span class="label-text text-base">Caption</span>
                                 </label>
-                                
-                                <!-- <textarea v-model="newBlogBody" class="border-slate-300 textarea w-full text-gray-600 textarea-bordered bg-transparent"></textarea> -->
                                 <QuillEditor theme="snow" v-model:content="newBlogBody" contentType="html" />
                             </div>
 
