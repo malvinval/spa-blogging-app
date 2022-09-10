@@ -14,20 +14,20 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-white border-b border-gray-100 dark:bg-gray-900 dark:border-none">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
-                                <BreezeNavLink :href="route('home')" :active="route().current('home')" class="items-center">
+                                <BreezeNavLink :href="route('home')" :active="route().current('home')" class="dark:text-white dark:hover:text-teal-500">
                                     <i class="bi bi-house-door"></i><p class="ml-2">Home</p>
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('blogs')" :active="route().current('blogs') || route().current('blog')">
+                                <BreezeNavLink :href="route('blogs')" :active="route().current('blogs') || route().current('blog')" class="dark:text-white dark:hover:text-teal-500">
                                     <i class="bi bi-book-half"></i><p class="ml-2">Blogs</p>
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('categories')" :active="route().current('categories')">
+                                <BreezeNavLink :href="route('categories')" :active="route().current('categories')" class="dark:text-white dark:hover:text-teal-500">
                                     <i class="bi bi-list-ul"></i><p class="ml-2">Category</p>
                                 </BreezeNavLink>
                             </div>
@@ -39,7 +39,7 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeDropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 border dark:bg-gray-900 border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 dark:hover:text-teal-500 dark:text-white focus:outline-none transition ease-in-out duration-150">
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
