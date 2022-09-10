@@ -35,8 +35,7 @@
 
         created() {
             this.isTagsRendered();
-        },
-        
+        },        
         methods: {
             isTagsRendered() {
                 if(this.tempTags) {
@@ -179,7 +178,7 @@
                         </div> 
                         <div class="mt-2">
                             <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800">{{ blog.title }}</Link> 
-                            <p class="mt-2 text-gray-500">{{ blog.excerpt }}</p>
+                            <p class="mt-2 text-gray-500" v-html="blog.excerpt"></p>
                         </div> 
                         <div class="flex items-center justify-between mt-4">
                             <div class="flex items-center w-">

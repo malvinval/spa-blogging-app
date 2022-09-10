@@ -66,8 +66,8 @@
                     <p class="mt-2 text-gray-500" v-html="blog.excerpt"></p>
                 </div> 
                 <div class="flex items-center justify-between mt-4">
-                    <div class="flex items-center w-">
-                        <Link :href="'/blog/'+blog.slug" class="btn btn-accent btn-outline mr-3">Read more</Link>
+                    <div class="flex items-center">
+                        <Link :href="'/blog/'+blog.slug" class="btn btn-accent btn-outline mr-3 hover:text-white">Read more</Link>
                     </div>
 
                     <div class="flex items-center">
