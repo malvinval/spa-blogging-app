@@ -129,24 +129,24 @@ export default {
                 <div class="font-sans">
                     <p class="text-base md:text-sm text-teal-500 font-bold">
                         <Link :href="route('blogs')"
-                            class="text-base md:text-sm text-teal-500 font-bold no-underline hover:underline">BACK TO
+                            class="text-base md:text-sm text-teal-500 dark:text-slate-500 font-bold no-underline hover:underline">BACK TO
                         BLOGS</Link>
                     </p>
-                    <h1 class="font-bold break-normal text-teal-900 pt-6 pb-2 text-3xl md:text-4xl">{{ blog.title }}
+                    <h1 class="font-bold break-normal text-teal-900 dark:text-teal-400 pt-6 pb-2 text-3xl md:text-4xl">{{ blog.title }}
                     </h1>
                     <div class="flex items-center text-xl justify-between">
-                        <p class="text-sm md:text-base font-normal text-gray-600">Published {{
+                        <p class="text-sm md:text-base font-normal text-gray-600 dark:text-gray-400">Published {{
                                 moment(blog.created_at).format("MMMM DD, YYYY")
                         }}</p>
                         <div class="flex">
                             <div class="flex views-btn-container mr-5">
-                                <i class="bi bi-eye-fill mr-2"></i>
-                                <p class="text-slate-800">{{ blog.reads }}</p>
+                                <i class="bi bi-eye-fill mr-2 dark:text-slate-300"></i>
+                                <p class="text-slate-800 dark:text-slate-300">{{ blog.reads }}</p>
                             </div>
                             <div class="flex like-btn-container">
                                 <i @click="like()" class="cursor-pointer bi-suit-heart-fill bi mr-2"
-                                    :class="liked ? 'text-secondary' : ''"></i>
-                                <p class="text-slate-800">{{ likes }}</p>
+                                    :class="liked ? 'text-secondary' : 'dark:text-slate-300'"></i>
+                                <p class="text-slate-800 dark:text-slate-300">{{ likes }}</p>
                             </div>
                         </div>
                     </div>
@@ -155,29 +155,29 @@ export default {
                 <!--Post Content-->
 
                 <!--Body-->
-                <p class="blog-body py-6 text-justify text-gray-600" v-html="blog.body"></p>
+                <div class="blog-body py-6 text-justify text-gray-600 dark:text-white" v-html="blog.body"></div>
             </div>
 
             <!--Category -->
             <div class="text-base flex justify-between md:text-sm text-gray-500 px-4 py-6">
                 <span>
-                    Category :
-                    <Link :href="'/blogs/?category='+blog.category.slug" class="text-base md:text-sm text-teal-500 no-underline hover:underline">{{ blog.category.name
+                    <span class="dark:text-slate-400">Category : </span> 
+                    <Link :href="'/blogs/?category='+blog.category.slug" class="text-base md:text-sm text-teal-500 no-underline hover:underline dark:text-teal-400">{{ blog.category.name
                     }}</Link>
                 </span>
             </div>
 
             <!--Divider-->
-            <hr class="border-b-2 border-gray-400 mb-8 mx-4">
+            <hr class="border-b-2 border-gray-400 mb-8 dark:border-gray-800 mx-4">
 
             <!-- Related Blog -->
-            <blockquote class="border-l-4 border-teal-500 bg-slate-200 mx-5 my-8 pl-8 md:pl-12 py-2">
+            <blockquote class="border-l-4 border-teal-500 bg-slate-200 mx-5 my-8 pl-8 md:pl-12 py-2 dark:bg-gray-900">
                 <span v-if="relatedBlog">
                     <span class="text-slate-500">Related blog </span>:
                     <Link :href="'/blog/' + relatedBlog.slug" class="text-teal-600 hover:underline">{{ relatedBlog.title }}</Link>
                 </span>
                 <span v-else>
-                    <p class="text-slate-600">
+                    <p class="text-slate-600 dark:text-slate-300">
                         No related blogs yet.
                     </p>
                 </span>
@@ -187,7 +187,7 @@ export default {
 
             <!-- Tags -->
             <div v-if="tags" class="text-base md:text-sm text-gray-500 px-4 py-6">
-                Tags :
+                <span class="dark:text-slate-400">Tags : </span>
                 <Link v-for="tag in blog.tags" :href="'/blogs/?tag='+tag.slug.en" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
                     <span>{{ tag.name.en }}</span> 
                 </Link>
@@ -205,13 +205,13 @@ export default {
                 <div class="collapse-title text-xl font-medium">
                     <p>
                         <i class="text-warning bi bi-exclamation-triangle-fill stroke-current flex-shrink-0 h-6 w-6"></i>
-                        &nbsp;<span class="text-teal-900 text-base underline">We provide rules for commenting</span>
+                        &nbsp;<span class="text-teal-900 text-base underline dark:text-teal-500">We provide rules for commenting</span>
                     </p>
                 </div>
                 <div class="collapse-content">
                     <div class="alert bg-transparent shadow-lg">
                         
-                        <span class="text-gray-600 px-4">
+                        <span class="text-gray-600 px-4 dark:text-white">
                             <ul class="list-disc">
                                 <li class="comment-rule">
                                     Don't share comments that are degrading, discriminatory, or
@@ -235,11 +235,11 @@ export default {
             </div>
 
             <div class="comments-container max-w-xl mx-5" v-if="comments != undefined">
-                <p class="text-lg font-bold text-gray-500 mt-5">{{ commentsData.length }} comments</p>
+                <p class="text-lg font-bold text-gray-500 mt-5 dark:text-gray-400">{{ commentsData.length }} comments</p>
                 <div v-for="comment in commentsData" class="group single-comment-container">
                     <div class="text-base font-semibold text-gray-600 flex items-center justify-between">
                         <div class="flex mx-0">
-                            <p>{{ comment.name }}</p>&nbsp;
+                            <p class="dark:text-gray-200">{{ comment.name }}</p>&nbsp;
                             <span class="text-sm font-normal text-gray-500">- {{ moment(comment.created_at).format("MMMM DD, YYYY") }} </span>
                         </div>
                         <div class="text-red-500 cursor-pointer invisible report-btn-container group-hover:visible">
@@ -247,7 +247,7 @@ export default {
                         </div>
                         
                     </div>
-                    <div class="text-base text-gray-500 my-2 text-justify">
+                    <div class="text-base text-gray-500 dark:text-gray-400 my-2 text-justify">
                         {{ comment.body }}
                     </div>
                 </div>
@@ -257,7 +257,7 @@ export default {
                 <textarea
                     v-model="commentBody" 
                     name="body"
-                    class="bg-transparent h-40 px-3 text-base py-1 mt-5 outline-none border-gray-200 w-full resize-none border rounded-lg placeholder:text-base"
+                    class="bg-transparent h-40 px-3 text-base py-1 mt-5 outline-none border-gray-200 w-full resize-none border rounded-lg placeholder:text-base dark:border-gray-500"
                     placeholder="Comment here...">
                 </textarea>
 
@@ -269,8 +269,8 @@ export default {
 
             <!--Donate-->
             <div class="container px-4">
-                <div class="bg-gradient-to-b from-teal-100 to-gray-100 rounded-lg shadow-xl p-4 text-center">
-                    <h2 class="font-bold break-normal text-xl md:text-3xl text-teal-800">Show your <span
+                <div class="bg-gradient-to-b from-teal-100 to-gray-100 dark:from-gray-900 dark:to-teal-800 rounded-lg shadow-xl p-4 text-center">
+                    <h2 class="font-bold break-normal text-xl md:text-3xl text-teal-800 dark:text-teal-500">Show your <span
                             class="text-rose-600">&hearts;</span> for this author !</h2>
                     <h3 class="font-bold break-normal text-gray-400 text-sm md:text-base">Please ensure that you do this
                         without any coercion.</h3>
@@ -291,12 +291,12 @@ export default {
             <div class="flex w-full items-center font-sans px-4 py-12">
                 <img class="w-10 h-10 rounded-full mr-4" src="http://i.pravatar.cc/300" alt="Avatar of Author">
                 <div class="flex-1 px-2">
-                    <p class="font-bold text-base md:text-xl leading-none mb-2">{{ blog.author.name }}</p>
-                    <p class="text-gray-600 text-xs md:text-base">Fullstack Web Developer</p>
+                    <p class="font-bold text-base md:text-xl leading-none mb-2 dark:text-slate-300">{{ blog.author.name }}</p>
+                    <p class="text-gray-600 text-xs md:text-base dark:text-gray-400">Fullstack Web Developer</p>
                 </div>
                 <div class="justify-end">
                     <button
-                        class="bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 font-bold py-2 px-4 rounded-full">See
+                        class="bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 dark:text-gray-300 font-bold py-2 px-4 rounded-full">See
                         More</button>
                 </div>
             </div>
@@ -318,14 +318,14 @@ export default {
             </div>
 
         </div>
-        <footer class="bg-white border-t border-gray-400 shadow">
+        <footer class="bg-white border-t border-gray-400 shadow dark:bg-gray-900 dark:border-none">
             <div class="container max-w-4xl mx-auto flex py-8">
 
                 <div class="w-full mx-auto flex flex-wrap">
                     <div class="flex w-full md:w-1/2 ">
                         <div class="px-8">
-                            <h3 class="font-bold text-gray-900">About the author</h3>
-                            <p class="py-4 text-gray-600 text-sm">
+                            <h3 class="font-bold text-gray-900 dark:text-gray-200">About the author</h3>
+                            <p class="py-4 text-gray-600 text-sm dark:text-gray-500">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus
                                 commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
                             </p>
@@ -337,15 +337,15 @@ export default {
                             <h3 class="font-bold text-gray-900">Social</h3>
                             <ul class="list-reset items-center text-sm pt-3">
                                 <li>
-                                    <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
                                         href="#">Github</a>
                                 </li>
                                 <li>
-                                    <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
                                         href="#">VK</a>
                                 </li>
                                 <li>
-                                    <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1"
+                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
                                         href="#">Facebook</a>
                                 </li>
                             </ul>

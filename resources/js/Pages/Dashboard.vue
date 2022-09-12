@@ -151,12 +151,12 @@
 
 <template>
     <Head title="Dashboard" />
-    <div id="sidebar" class="bg-white">
+    <div id="sidebar" class="bg-white dark:bg-gray-900">
         <div class="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col p-10">
                 <div class="flex lg:justify-start justify-end">
-                    <Link :href="'/dashboard/blogs/create'" v-if="route_name == 'blogs.index'" class="btn btn-accent ml-2 border-none bg-teal-50 hover:bg-teal-50 text-teal-500 rounded-full text-2xl">
+                    <Link :href="'/dashboard/blogs/create'" v-if="route_name == 'blogs.index'" class="btn btn-accent ml-2 border-none bg-teal-50 hover:bg-teal-50 text-teal-500 rounded-full text-2xl dark:bg-gray-800 dark:hover:bg-gray-700">
                         <i class="bi bi-plus-lg"></i>
                     </Link>
                     <label for="my-drawer-2" :class="route_name == 'dashboard' ? 'ml-auto' : ''" class="btn btn-accent ml-2 border-none bg-teal-50 text-teal-500 hover:bg-teal-50 rounded-full drawer-button text-2xl lg:hidden">
@@ -173,14 +173,14 @@
 
                 <!-- Dashboard Blogs -->
                 <div v-else-if="route_name == 'blogs.index'">
-                    <div v-for="(blog, index) in blogs.data" class="w-auto my-5 px-8 py-4 rounded-lg shadow-md bg-white" style="cursor: auto;">
+                    <div v-for="(blog, index) in blogs.data" class="w-auto my-5 px-8 py-4 rounded-lg shadow-md bg-white dark:bg-slate-800" style="cursor: auto;">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm font-light text-gray-600">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
+                            <span class="text-sm font-light text-gray-600 dark:text-white">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
                             <Link :href="'/blogs/?category='+blog.category.slug" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</Link>
                         </div> 
                         <div class="mt-2">
-                            <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800">{{ blog.title }}</Link> 
-                            <p class="mt-2 text-gray-500" v-html="blog.excerpt"></p>
+                            <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-500">{{ blog.title }}</Link> 
+                            <p class="mt-2 text-gray-500 dark:text-gray-400" v-html="blog.excerpt"></p>
                         </div> 
                         <div class="flex items-center justify-between mt-4">
                             <div class="flex items-center w-">
@@ -323,36 +323,36 @@
             </div>
             <div class="drawer-side">
                 <label for="my-drawer-2" class="drawer-overlay"></label>
-                <div class="h-full bg-white sidebar-container border border-r-slate-200 w-80 flex items-center">
+                <div class="h-full bg-white sidebar-container border border-r-slate-200 dark:border-none w-80 flex items-center dark:bg-gray-900">
                     <ul class="text-black menu p-4 overflow-y-auto w-80 h-auto">
                         <!-- Sidebar content here -->
                         <li class="sidebar-navigator">
                             <Link :href="'/blogs'" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white">
                                 <div class="sidebar-icon-container px-3">
-                                    <i class="bi bi-arrow-left"></i>
+                                    <i class="bi bi-arrow-left text-teal-600"></i>
                                 </div>
                                 <div>
-                                    <p class="text-opacity-40">Back to blogs</p>
+                                    <p class="text-opacity-40 dark:text-white">Back to blogs</p>
                                 </div>  
                             </Link>
                         </li>
                         <li class="sidebar-navigator">
                             <Link :href="'/dashboard'" :class="route_name == 'dashboard' ? 'bg-teal-500 text-white' : ''" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white active:bg-teal-500 active:text-white">  
                                 <div class="sidebar-icon-container px-3">
-                                    <i class="bi bi-person"></i>
+                                    <i class="bi bi-person text-teal-600" :class="route_name == 'dashboard' ? 'dark:text-white' : ''"></i>
                                 </div>
                                 <div>
-                                    <p>Profile</p>
+                                    <p class="dark:text-white" :class="route_name == 'dashboard' ? 'dark:text-white' : ''">Profile</p>
                                 </div>            
                             </Link>
                         </li>
                         <li class="sidebar-navigator">
                             <Link :href="'/dashboard/blogs'" :class="route_name == 'blogs.index' ? 'bg-teal-500 text-white' : ''" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white active:bg-teal-500 active:text-white">  
-                                <div class="sidebar-icon-container px-3">
-                                    <i class="bi bi-book-half active:text-teal-500"></i>
+                                <div class="sidebar-icon-container px-3 text-teal-500">
+                                    <i class="bi bi-book-half text-teal-600" :class="route_name == 'blogs.index' ? 'dark:text-white' : ''"></i>
                                 </div>
                                 <div>
-                                    <p>My blogs</p>
+                                    <p class="dark:text-white">My blogs</p>
                                 </div>            
                             </Link>
                         </li>
