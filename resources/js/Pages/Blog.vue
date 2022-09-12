@@ -22,7 +22,6 @@ export default {
     data() {
         return {
             moment: moment,
-            // csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             blogId: this.blogObj[0].id,
             likes: this.likesData,
             liked: this.isLiked,
@@ -188,7 +187,7 @@ export default {
             <!-- Tags -->
             <div v-if="tags" class="text-base md:text-sm text-gray-500 px-4 py-6">
                 <span class="dark:text-slate-400">Tags : </span>
-                <Link v-for="tag in blog.tags" :href="'/blogs/?tag='+tag.slug.en" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600">
+                <Link v-for="tag in blog.tags" :href="'/blogs/?tag='+tag.slug.en" class="mr-1 my-1 btn btn-xs bg-teal-500 border-none text-white hover:bg-teal-600 dark:bg-opacity-20 dark:text-teal-300 dark:hover:bg-teal-800">
                     <span>{{ tag.name.en }}</span> 
                 </Link>
             </div>

@@ -58,7 +58,7 @@
             <div v-for="(blog, index) in blogs.data" :key="blog.id" :class="index === 0 ? 'my-10' : 'mb-10'" class="w-full mx-5 px-8 py-4 rounded-lg shadow-md bg-white dark:bg-slate-800" style="cursor: auto;">
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-light text-gray-600 dark:text-white">{{ moment(blog.created_at).format("Mo DD, YYYY") }}</span> 
-                    <Link :href="'/blogs/?category='+blog.category.slug" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600">{{ blog.category.name }}</Link>
+                    <Link :href="'/blogs/?category='+blog.category.slug" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-teal-500 rounded cursor-pointer hover:bg-teal-600 dark:bg-opacity-20 dark:text-teal-300">{{ blog.category.name }}</Link>
                 </div> 
                 <div class="mt-2">
                     <Link class="text-2xl font-bold text-teal-900 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-500">{{ blog.title }}</Link> 
