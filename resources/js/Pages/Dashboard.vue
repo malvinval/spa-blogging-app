@@ -200,7 +200,7 @@
 
                 <!-- Dashboard (create blogs) -->
                 <div v-else-if="route_name == 'blogs.create'">
-                    <h1 class="lg:text-4xl text-2xl text-teal-900">Create new blog</h1>
+                    <h1 class="lg:text-4xl text-2xl text-teal-900 dark:text-teal-500">Create new blog</h1>
                     <div class="mt-10">
                         <div class="form-control max-w-7xl mb-10">
                             <!-- Title input -->
@@ -209,12 +209,12 @@
                                     <span class="label-text text-base">Title</span>
                                 </label>
                                 
-                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full text-gray-600 border-slate-300 text-base bg-transparent" />
+                                <input v-model="newBlogTitle" type="text" class="input input-bordered w-full text-gray-600 dark:text-white border-slate-300 text-base bg-transparent" />
                             </div>
 
                             <!-- Category input -->
                             <div class="mt-8">
-                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
+                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 dark:text-white border-slate-300 text-base font-light">
                                     <option disabled selected>Pick category</option>
                                     <option v-for="category in categories" @click="newBlogCategoryId = category.id">{{ category.name }}</option>
                                 </select>
@@ -225,7 +225,7 @@
                                 <label class="label">
                                     <span class="label-text text-base">Caption</span>
                                 </label>
-                                <QuillEditor theme="snow" v-model:content="newBlogBody" contentType="html" />
+                                <QuillEditor class="dark:text-white" theme="snow" v-model:content="newBlogBody" contentType="html" />
                             </div>
 
                             <!-- Tags input -->
@@ -235,7 +235,7 @@
                                     <div class="w-full sm:mb-2">
                                         <label for="input1">
                                             <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
-                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 peer"
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 dark:bg-transparent peer"
                                             type="text" />
                                         </label>
                                     </div>
@@ -243,7 +243,7 @@
 
                                 <div class='pt-2  flex flex-wrap rounded-lg'>
                                     <span v-for="tag in tags"
-                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500">
+                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500 dark:bg-teal-500 dark:bg-opacity-50 dark:text-white">
                                         {{ tag }}
                                         <svg @click="tags = deleteTag(tags, tag)" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20"
                                         fill="currentColor">
@@ -262,7 +262,7 @@
                 <!-- Dashboard (edit blogs) -->
                 <div v-else-if="route_name == 'blogs.edit'">
                     
-                    <h1 class="lg:text-4xl text-2xl text-teal-900">Edit blog</h1>
+                    <h1 class="lg:text-4xl text-2xl text-teal-900 dark:text-teal-500">Edit blog</h1>
                     <div class="mt-10">
                         <div class="form-control max-w-7xl mb-10">
                         
@@ -272,19 +272,19 @@
                                     <span class="label-text text-base">Title</span>
                                 </label>
                                 
-                                <input v-model="this.blog.title" type="text" class="input text-base input-bordered w-full text-gray-600 border-slate-300 bg-transparent" />
+                                <input v-model="this.blog.title" type="text" class="input text-base input-bordered w-full text-gray-600 dark:text-white border-slate-300 bg-transparent" />
                             </div>
 
                             <!-- Category edit input -->
                             <div class="mt-8">
-                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 text-base font-light">
+                                <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 dark:text-white text-base font-light">
                                     <option disabled selected>Pick category</option>
                                     <option v-for="category in categories" @click="newBlogCategoryId = category.id">{{ category.name }}</option>
                                 </select>
                             </div>
                             
                             <!-- Body edit input -->
-                            <div class="mt-5 text-gray-600">
+                            <div class="mt-5 text-gray-600 dark:text-white">
                                 <label class="label">
                                     <span class="label-text text-base">Caption</span>
                                 </label>
@@ -297,7 +297,7 @@
                                     <div class="w-full sm:mb-2">
                                         <label for="input1">
                                             <span class="ml-2 text-sm sm:text-base">Tags (separate by comma)</span>
-                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 peer"
+                                            <input @keyup="isInsertTag(inputtedTag)" v-model="inputtedTag" id="input1" class="mt-2 py-2 px-5 border-slate-300 w-full text-base outline-none placeholder:text-gray-400 dark:bg-transparent peer"
                                             type="text" />
                                         </label>
                                     </div>
@@ -305,7 +305,7 @@
 
                                 <div class='pt-2  flex flex-wrap rounded-lg'>
                                     <span v-for="tag in tags"
-                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500">
+                                        class="flex flex-wrap m-1 pl-4 pr-2 py-2 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-teal-50 text-teal-500 dark:bg-teal-500 dark:bg-opacity-50 dark:text-white">
                                         {{ tag }}
                                         <svg @click="tags = deleteTag(tags, tag)" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20"
                                         fill="currentColor">
