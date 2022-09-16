@@ -18,6 +18,9 @@
         <link rel="stylesheet" href="{{ asset('/css/trix.css') }}">
         <script src="{{ asset('/js/trix.js') }}"></script>
 
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
         <!-- Scripts -->
         @routes
         @vite('resources/js/app.js')
