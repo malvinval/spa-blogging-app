@@ -23,7 +23,7 @@ class DashboardBlogsController extends Controller
         $blogs = Blog::where("author_id", Auth::user()->id)->with(["author", "category"])->filter(request(["search", "category", "tag"]))->latest()->paginate(3);
         $categories = Category::all();
 
-        return Inertia::render("Dashboard", [
+        return Inertia::render("DashboardBlogs", [
             "route_name" => $route_name,
             "blogs" => $blogs,
             "categories" => $categories
@@ -39,7 +39,7 @@ class DashboardBlogsController extends Controller
     {
         $route_name = Route::current()->getName();
         $categories = Category::all();
-        return Inertia::render("Dashboard", [
+        return Inertia::render("CreateBlogsPage", [
             "route_name" => $route_name,
             "categories" => $categories
         ]);
@@ -98,8 +98,8 @@ class DashboardBlogsController extends Controller
         $tags = $blog->tags;
         $route_name = Route::current()->getName();
         $categories = Category::all();
-        // dd($tags);
-        return Inertia::render("Dashboard", [
+
+        return Inertia::render("EditBlogsPage", [
             "route_name" => $route_name,
             "categories" => $categories,
             "blog" => $blog,

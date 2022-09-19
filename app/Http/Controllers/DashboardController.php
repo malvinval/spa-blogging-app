@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $route_name = Route::current()->getName();
         $userName = Auth::user()->name;
 
-        return Inertia::render("Dashboard", [
+        return Inertia::render("DashboardProfile", [
             "route_name" => $route_name,
             "user_name" => $userName
         ]);

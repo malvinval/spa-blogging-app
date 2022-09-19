@@ -78,12 +78,9 @@
 
             <p v-if="blogsDataSize == 0" class="text-teal-500 my-10 font-bold">No blogs found.</p>
             
-            <div class="mx-auto my-10">
+            <div class="my-5">
                 <Pagination :links="blogs.links" />
             </div>
         </div>
-
-
-
     </BreezeAuthenticatedLayout>
 </template>
