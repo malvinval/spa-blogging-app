@@ -23,12 +23,12 @@
                     </Link>
                 </li>
                 <li class="sidebar-navigator mb-3">
-                    <Link :href="'/dashboard'" :class="route_name == 'dashboard' ? 'bg-teal-500 text-white' : ''" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white active:bg-teal-500 active:text-white">  
+                    <Link :href="'/dashboard/profile'" :class="route_name == 'profile.index' || route.name == 'profile.edit' ? 'bg-teal-500 text-white' : ''" class="focus:bg-teal-500 focus:text-white hover:bg-teal-500 hover:text-white active:bg-teal-500 active:text-white">  
                         <div class="sidebar-icon-container px-3">
-                            <i class="bi bi-person text-teal-600" :class="route_name == 'dashboard' ? 'dark:text-white' : ''"></i>
+                            <i class="bi bi-person text-teal-600" :class="route_name == 'profile.index' ? 'dark:text-white' : ''"></i>
                         </div>
                         <div>
-                            <p class="dark:text-white" :class="route_name == 'dashboard' ? 'dark:text-white' : ''">Profile</p>
+                            <p class="dark:text-white" :class="route_name == 'profile.index' ? 'dark:text-white' : ''">Profile</p>
                         </div>            
                     </Link>
                 </li>

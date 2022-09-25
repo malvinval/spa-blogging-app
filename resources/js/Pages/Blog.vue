@@ -34,9 +34,6 @@ export default {
             reportCommentSuccessText: ''
         }
     },
-    // mounted() {
-    //     console.log(this.tags);
-    // },
 
     methods: {
         like() {
@@ -275,11 +272,10 @@ export default {
                         without any coercion.</h3>
                     <div class="w-full text-center pt-4">
                         <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <input type="email" placeholder="youremail@example.com"
-                                class="flex-1 mt-4 appearance-none border border-gray-400 rounded shadow-md p-3 text-gray-600 mr-2 focus:outline-none">
+                            
                             <Link
                                 class="flex-1 mt-4 block md:inline-block appearance-none bg-teal-500 text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-teal-400">
-                            Saweria.co</Link>
+                            Donate</Link>
                         </div>
                     </div>
                 </div>
