@@ -6,6 +6,9 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\CommentReportsCategory;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
@@ -128,6 +131,24 @@ class SiteController extends Controller
             "isRulesConfirmed" => $isRulesConfirmed,
             "tags" => $tags,
             "relatedBlog" => $related_blog
+        ]);
+    }
+
+    public function updateProfileImage(Request $request) {
+        // $image = $request->params["image"];
+
+        $url = $request->params["image"];
+        $contents = file_get_contents($url);
+        Storage::disk('local')->put('public/profile-image/'. Auth::user()->id . '/avatar.png', $contents);
+
+        $user = User::find(Auth::user()->id);
+
+        $user->image = "/storage/profile-image/" . Auth::user()->id . "/avatar.png";
+
+        $user->save();
+        
+        return response()->json([
+            "success" => gettype($contents)
         ]);
     }
 }

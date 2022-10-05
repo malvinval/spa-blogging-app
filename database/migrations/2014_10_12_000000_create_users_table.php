@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('image')->default("/img/defaultUserImage.svg");
+            $table->text('image')->default("/img/defaultUserImage.svg");
             $table->string('country')->nullable();
             $table->string('status')->nullable();
             $table->string('bio')->nullable();

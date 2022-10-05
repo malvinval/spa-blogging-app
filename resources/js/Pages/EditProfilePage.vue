@@ -39,12 +39,12 @@
                 <div class="mt-10">
                     <div class="form-control max-w-7xl mb-10">
                         <!-- Profile image input -->
-                        <div class="md:w-1/2 w-full">
+                        <!-- <div class="md:w-1/2 w-full">
                             <label class="label">
                                 <span class="label-text text-base">Profile avatar</span>
                             </label>
                             <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-                        </div>
+                        </div> -->
                             
                         <!-- Fullname edit input -->
                         <div class="mt-5 md:w-1/2 w-full">

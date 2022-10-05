@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="flex items-center">
-                        <img src="https://picsum.photos/200" alt="Author Photo" class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"> 
+                        <img :src="blog.author.image" alt="Author Photo" class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"> 
                         <Link class="font-bold text-right cursor-pointer text-slate-600 dark:text-slate-300">{{ blog.author.name }}</Link>
                     </div>
                 </div>

@@ -19,7 +19,10 @@
         <script src="{{ asset('/js/trix.js') }}"></script>
 
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
-<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
+        {{-- jQuery --}}
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
         <!-- Scripts -->
         @routes

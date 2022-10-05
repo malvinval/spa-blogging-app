@@ -22,6 +22,7 @@
     "dependencies": {
         "@vueup/vue-quill": "^1.0.0-beta.9",
         "bootstrap-icons": "^1.9.1",
+        "croppie": "^2.6.5",
         "daisyui": "^2.19.1",
         "moment": "^2.29.4",
         "sweetalert": "^2.1.2",

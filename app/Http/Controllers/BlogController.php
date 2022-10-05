@@ -30,7 +30,7 @@ class BlogController extends Controller
     public function setRulesConfirmed() {
         $cookie_name = Auth::user()->id . "-rules-confirmed";
         $cookie_value = Auth::user()->id . "-rules-confirmed";
-        $cookie_duration = 1;
+        $cookie_duration = 30;
         Cookie::queue($cookie_name, $cookie_value, $cookie_duration);
     }
 

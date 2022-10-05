@@ -85,7 +85,7 @@ class DashboardProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**

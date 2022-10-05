@@ -41,6 +41,8 @@ Route::post('/set-rules-confirmed', [BlogController::class, "setRulesConfirmed"]
 Route::post('/send-comment-report/{id}', [BlogController::class, "sendCommentReport"])->name("sendcommentreport");
 // End Blog API
 
+Route::post("/update-profile-image", [SiteController::class, 'updateProfileImage']);
+
 Route::get('/categories', function () {
     return Inertia::render('Categories');
 })->middleware(['auth', 'verified'])->name('categories');

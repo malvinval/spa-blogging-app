@@ -284,7 +284,7 @@ export default {
 
             <!--Author-->
             <div class="flex w-full items-center font-sans px-4 py-12">
-                <img class="w-10 h-10 rounded-full mr-4" src="http://i.pravatar.cc/300" alt="Avatar of Author">
+                <img class="w-10 h-10 rounded-full mr-4" :src="blog.author.image" alt="Avatar of Author">
                 <div class="flex-1 px-2">
                     <p class="font-bold text-base md:text-xl leading-none mb-2 dark:text-slate-300">{{ blog.author.name }}</p>
                     <p class="text-gray-600 text-xs md:text-base dark:text-gray-400">Fullstack Web Developer</p>

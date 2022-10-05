@@ -1,5 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
+import '../../node_modules/croppie/croppie.js';
+import '../../node_modules/croppie/croppie.css';
+import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
 import swal from 'sweetalert';
 import { createApp, h } from 'vue';
