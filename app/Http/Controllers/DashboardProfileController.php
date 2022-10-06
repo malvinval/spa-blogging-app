@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class DashboardProfileController extends Controller
@@ -66,13 +66,16 @@ class DashboardProfileController extends Controller
      */
     public function edit($id)
     {
+        $user = User::find($id);
+
         $route_name = Route::current()->getName();
         $countries = file_get_contents(base_path() . "/public/js/countries.json");
         $countries = json_decode($countries, true);
 
         return Inertia::render("EditProfilePage", [
             "route_name" => $route_name,
-            "countries" => $countries
+            "countries" => $countries,
+            "user" => $user
         ]);
     }
 
@@ -85,7 +88,23 @@ class DashboardProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $user = User::find($id);
+
+        $bio = $request->params["bio"];
+        $fullname = $request->params["fullname"];
+        $status = $request->params["status"];
+        $country = $request->params["country"];
+
+        $user->update([
+            "status" => $status,
+            "name" => $fullname,
+            "bio" => $bio,
+            "country" => $country
+        ]);
+
+        return response()->json([
+            "success" => "Your profile has been updated !",
+        ]);
     }
 
     /**

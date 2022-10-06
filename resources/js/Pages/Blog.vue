@@ -264,7 +264,7 @@ export default {
             <!-- /Comment -->
 
             <!--Donate-->
-            <div class="container px-4">
+            <!-- <div class="container px-4">
                 <div class="bg-gradient-to-b from-teal-100 to-gray-100 dark:from-gray-900 dark:to-teal-800 rounded-lg shadow-xl p-4 text-center">
                     <h2 class="font-bold break-normal text-xl md:text-3xl text-teal-800 dark:text-teal-500">Show your <span
                             class="text-rose-600">&hearts;</span> for this author !</h2>
@@ -279,7 +279,7 @@ export default {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- /Donate-->
 
             <!--Author-->
@@ -287,7 +287,7 @@ export default {
                 <img class="w-10 h-10 rounded-full mr-4" :src="blog.author.image" alt="Avatar of Author">
                 <div class="flex-1 px-2">
                     <p class="font-bold text-base md:text-xl leading-none mb-2 dark:text-slate-300">{{ blog.author.name }}</p>
-                    <p class="text-gray-600 text-xs md:text-base dark:text-gray-400">Fullstack Web Developer</p>
+                    <p class="text-gray-600 text-xs md:text-base dark:text-gray-400">{{ blog.author.status ? blog.author.status : "IT Enthusiast" }}</p>
                 </div>
                 <div class="justify-end">
                     <button
@@ -312,43 +312,46 @@ export default {
                 </div>
             </div>
 
-        </div>
-        <footer class="bg-white border-t border-gray-400 shadow dark:bg-gray-900 dark:border-none">
-            <div class="container max-w-4xl mx-auto flex py-8">
+        
+            <footer class="bg-white border-t border-gray-400 shadow dark:bg-gray-900 dark:border-none">
+                <div class="container max-w-4xl mx-auto flex py-8">
 
-                <div class="w-full mx-auto flex flex-wrap">
-                    <div class="flex w-full md:w-1/2 ">
-                        <div class="px-8">
-                            <h3 class="font-bold text-gray-900 dark:text-gray-200">About the author</h3>
-                            <p class="py-4 text-gray-600 text-sm dark:text-gray-500">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus
-                                commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
-                            </p>
+                    <div class="w-full mx-auto flex flex-wrap">
+                        <div class="flex w-full md:w-1/2 ">
+                            <div class="px-8">
+                                <h3 class="font-bold text-gray-900 dark:text-gray-200">About the author</h3>
+                                <p v-if="blog.author.about" class="py-4 text-gray-600 text-sm dark:text-gray-500">
+                                    {{ blog.author.about }}
+                                </p>
+                                <p v-else class="py-4 text-gray-600 text-sm dark:text-gray-500">
+                                    No data provided.
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="flex w-full md:w-1/2">
-                        <div class="px-8">
-                            <h3 class="font-bold text-gray-900">Social</h3>
-                            <ul class="list-reset items-center text-sm pt-3">
-                                <li>
-                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
-                                        href="#">Github</a>
-                                </li>
-                                <li>
-                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
-                                        href="#">VK</a>
-                                </li>
-                                <li>
-                                    <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
-                                        href="#">Facebook</a>
-                                </li>
-                            </ul>
+                        <div class="flex w-full md:w-1/2">
+                            <div class="px-8">
+                                <h3 class="font-bold text-gray-900 dark:text-gray-200">Social</h3>
+                                <ul class="list-reset items-center text-sm pt-3">
+                                    <li>
+                                        <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
+                                            href="#">Github</a>
+                                    </li>
+                                    <li>
+                                        <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
+                                            href="#">VK</a>
+                                    </li>
+                                    <li>
+                                        <a class="inline-block text-gray-600 dark:text-gray-300 no-underline hover:text-gray-900 dark:hover:text-teal-400 hover:text-underline py-1"
+                                            href="#">Facebook</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
         <input type="checkbox" id="report-modal" class="modal-toggle" />
         <div class="modal">
             <div class="modal-box relative">

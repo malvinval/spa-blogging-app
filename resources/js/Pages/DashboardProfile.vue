@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="mb-2 mt-5">
                                     <i class="fas fa-briefcase mr-2 text-lg"></i>
-                                    <span v-if="user.status">Fullstack Web Developer - Cyber Security Researcher</span>
+                                    <span v-if="user.status">{{ user.status }}</span>
                                     <span v-else class="italic">No status data provided</span>
                                 </div>
                             </div>

@@ -4,7 +4,8 @@
     
     defineProps({
         route_name: String,
-        countries: Object
+        countries: Object,
+        user: Object
     });
 
     components: {
@@ -16,9 +17,31 @@
     export default {
         data() {
             return {
-                bio: ""
+                bio: this.user.bio,
+                fullname: this.user.name,
+                status: this.user.status,
             }
-        },   
+        }, methods: {
+            updateProfile(id) {
+                axios.put('/dashboard/profile/'+id, {
+                        params: {
+                            bio: this.bio,
+                            fullname: this.fullname,
+                            status: this.status,
+                            country: document.getElementById("countryInput").value
+                        }
+                    }).then((response) => {
+                            swal({
+                                title: "Yay !",
+                                text: response.data.success,
+                                icon: "success",
+                                timer: 3000,
+                                buttons: false
+                            });
+                        }
+                    )
+            }
+        },
     }
 </script>
 
@@ -38,29 +61,21 @@
                 <h1 class="lg:text-4xl text-2xl text-teal-900 dark:text-teal-500">Edit Profile</h1>
                 <div class="mt-10">
                     <div class="form-control max-w-7xl mb-10">
-                        <!-- Profile image input -->
-                        <!-- <div class="md:w-1/2 w-full">
-                            <label class="label">
-                                <span class="label-text text-base">Profile avatar</span>
-                            </label>
-                            <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-                        </div> -->
-                            
                         <!-- Fullname edit input -->
                         <div class="mt-5 md:w-1/2 w-full">
                             <label class="label">
                                 <span class="label-text text-base">Full name</span>
                             </label>
                             
-                            <input type="text" class="input text-base input-bordered w-full text-gray-600 dark:text-white border-slate-300 bg-transparent" />
+                            <input type="text" v-model="fullname" class="input text-base input-bordered w-full text-gray-600 dark:text-white border-slate-300 bg-transparent" />
                         </div>
 
                         <!-- Country edit input -->
                         <div class="mt-8">
-                            <select class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 dark:text-white text-base font-light">
-                                <option disabled selected>Your country</option>
-
-                                <option v-for="country in countries">{{ country.Name }}</option>
+                            <select id="countryInput" class="md:w-1/2 w-full select select-bordered bg-transparent text-gray-600 border-slate-300 dark:text-white text-base font-light">
+                                <option v-if="user.country" :value="user.country" selected>{{ user.country }}</option>
+                                <option v-else selected>Your country</option>
+                                <option v-for="country in countries" :value="country.Name">{{ country.Name }}</option>
                             </select>
                         </div>
                         
@@ -71,8 +86,9 @@
                             </label>
                             <textarea
                                 v-model="bio"
+                                id="bioInput"
                                 name="bio"
-                                class="bg-transparent h-40 px-3 text-base py-1 mt-5 outline-none border-gray-200 w-full resize-none border rounded-lg placeholder:text-base dark:border-gray-500"
+                                class="bg-transparent h-40 px-3 text-base py-1 mt-5 outline-none border-gray-200 w-full lg:w-3/4 resize-none border rounded-lg placeholder:text-base dark:border-gray-500"
                                 placeholder="Write something about yourself here...">
                             </textarea>
                         </div>
@@ -83,10 +99,10 @@
                                 <span class="label-text text-base">Status</span>
                             </label>
                             
-                            <input placeholder="ex : Fullstack Web Developer" type="text" class="input text-base input-bordered w-full text-gray-600 dark:text-white border-slate-300 bg-transparent" />
+                            <input v-model="status" placeholder="ex : Fullstack Web Developer" type="text" class="input text-base input-bordered w-full text-gray-600 dark:text-white border-slate-300 bg-transparent" />
                         </div>
                     </div>
-                    <button class="btn btn-accent text-white">Update</button>
+                    <Link :href="'/dashboard/profile'" @click="updateProfile(user.id)" class="btn btn-accent">Update</Link>
                 </div>
             </div>
             <DrawerSide :route_name="route_name"></DrawerSide>

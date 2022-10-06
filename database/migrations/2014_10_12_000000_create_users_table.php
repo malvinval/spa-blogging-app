@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->text('image')->default("/img/defaultUserImage.svg");
             $table->string('country')->nullable();
-            $table->string('status')->nullable();
-            $table->string('bio')->nullable();
+            $table->string('status')->default("IT Enthusiast");
+            $table->string('bio')->default("IT Enthusiast");
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
